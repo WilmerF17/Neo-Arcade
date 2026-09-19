@@ -530,6 +530,17 @@ export default function App(){
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[active, highScores, plays, totalPlays, gamesPlayedDistinct, level, coins, streak, dailyList, dailyDone])
 
+  const handleShare = useCallback(async ()=>{
+    const url = 'https://wilmerf17.github.io/Neo-Arcade/'
+    const text = `NEO ARCADE — Nivel ${level} • ${totalScore.toLocaleString()} pts • ${gamesPlayedDistinct}/50 cabinas • ¡Juega ${GAMES[active].title} conmigo!`
+    try{
+      if(navigator.share){ await navigator.share({title:'NEO ARCADE', text, url}); addToast('¡Compartido!','Link copiado a tus apps') }
+      else if(navigator.clipboard){ await navigator.clipboard.writeText(`${text} ${url}`); addToast('¡Link copiado!','Pégalo en WhatsApp/Twitter') }
+      else { addToast(url, text.slice(0,60)) }
+    }catch{}
+    playClick()
+  },[level, totalScore, gamesPlayedDistinct, active, playClick])
+
   const filteredGames = useMemo(()=>{
     const term=search.toLowerCase()
     return (Object.keys(GAMES) as GameId[]).filter(id=>{
@@ -614,6 +625,7 @@ export default function App(){
             <button onClick={()=>{setShowAch(true); playClick()}} className="px-3 py-1.5 rounded-full glass font-mono text-xs tracking-widest text-white/80 hover:bg-white/10">🏆 LOGROS {Object.values(achUnlocked).filter(Boolean).length}/{ACHIEVEMENTS.length}</button>
             <span className={`hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-mono tracking-widest border ${syncStatus==='ok'?'bg-emerald-500/15 border-emerald-400/30 text-emerald-300': syncStatus==='syncing'?'bg-amber-500/15 border-amber-400/30 text-amber-300 animate-pulse': syncStatus==='error'?'bg-red-500/10 border-red-400/20 text-red-300':'glass border-white/10 text-white/45'}`} title={syncStatus==='ok'?'Sincronizado con terminal': syncStatus==='syncing'?'Sincronizando...': 'Sin conexión terminal'}>● {syncStatus==='ok'?'SYNC': syncStatus==='syncing'?'SYNC...': syncStatus==='error'?'OFFLINE':'SYNC'}</span>
             <button onClick={()=>setRgbMode(!rgbMode)} className={`w-8 h-8 rounded-full flex items-center justify-center hover:bg-white/10 text-sm border ${rgbMode?'bg-gradient-to-br from-cyan-400 to-fuchsia-500 text-black border-white/20 neon-pulse':'glass text-white/80 border-white/10'}`} title="RGB Mode">🌈</button>
+            <button onClick={handleShare} className="w-8 h-8 rounded-full glass flex items-center justify-center hover:bg-white/10 text-white/80 text-xs border border-white/10" title="Compartir puntuación">↗</button>
             <button onClick={()=>setMuted(!muted)} className="w-8 h-8 rounded-full glass flex items-center justify-center hover:bg-white/10 text-white/80 text-sm">{muted?'🔇':'🔊'}</button>
           </div>
         </div>
@@ -895,8 +907,8 @@ export default function App(){
       <PWAInstall />
 
       <footer className="max-w-[1400px] mx-auto px-4 pb-8 pt-2 text-center">
-        <p className="text-[11px] font-mono tracking-widest text-white/30">NEO ARCADE v3.1 ELITE © 2026 — 50 juegos • RGB animado • Progresión total • Desafíos diarios • Logros • PWA Instalable • Vite + React + Tailwind</p>
-        <p className="text-[11px] font-mono text-white/20 mt-1">Instalable en PC (Chrome/Edge → Instalar) y móvil (Compartir → Añadir a pantalla de inicio) • Funciona offline</p>
+        <p className="text-[11px] font-mono tracking-widest text-white/30">NEO ARCADE v3.2 ELITE © 2026 — 50 juegos • RGB animado • Progresión total • Desafíos diarios • Logros • PWA Instalable • Vite + React + Tailwind</p>
+        <p className="text-[11px] font-mono text-white/20 mt-1">Instalable en PC (Chrome/Edge → Instalar) y móvil (Compartir → Añadir a pantalla de inicio) • Funciona offline • <a href="https://github.com/WilmerF17/Neo-Arcade" target="_blank" rel="noreferrer" className="underline hover:text-cyan-300">GitHub</a> • <button onClick={handleShare} className="underline hover:text-cyan-300">Compartir ↗</button> • <span className="text-white/25">v3.2 • {totalScore.toLocaleString()} pts totales</span></p>
       </footer>
     </div>
   )

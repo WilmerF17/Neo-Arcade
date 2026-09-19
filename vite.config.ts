@@ -22,6 +22,19 @@ function ensureStats(){
 }
 ensureStats()
 
+function spa404Plugin(){
+  return {
+    name: 'spa-404',
+    closeBundle(){
+      try{
+        const html = fs.readFileSync(path.resolve('dist/index.html'),'utf-8')
+        fs.writeFileSync(path.resolve('dist/404.html'), html)
+        console.log('[SPA] 404.html generado para GitHub Pages')
+      }catch{}
+    }
+  }
+}
+
 function arcadeSyncPlugin(){
   return {
     name: 'arcade-sync',
@@ -110,7 +123,7 @@ function arcadeSyncPlugin(){
 
 export default defineConfig({
   base: '/Neo-Arcade/',
-  plugins: [react(), arcadeSyncPlugin(), VitePWA({
+  plugins: [react(), arcadeSyncPlugin(), spa404Plugin(), VitePWA({
     registerType: 'autoUpdate',
     includeAssets: ['favicon.ico','favicon.png','icon-*.png','icon.png','icon-master-1024.png','apple-touch-icon.png'],
     manifest: {
