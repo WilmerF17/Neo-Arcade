@@ -555,6 +555,7 @@ export default function App(){
 
   return (
     <div className="min-h-screen relative crt overflow-hidden selection:bg-cyan-400 selection:text-black">
+      <a href="#arcade" className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:px-4 focus:py-2 focus:bg-white focus:text-black focus:rounded-full focus:font-black">Saltar al juego</a>
       <div className="fixed inset-0 -z-10">
         <div className="absolute inset-0 bg-[#040510]" />
         <div className="absolute inset-0 opacity-40" style={{background:`radial-gradient(900px 600px at 18% 8%, rgba(0,255,255,0.16), transparent 60%), radial-gradient(800px 600px at 92% 92%, rgba(255,0,255,0.18), transparent 60%), radial-gradient(700px 700px at 50% 45%, rgba(120,0,255,0.13), transparent 70%)`}}/>
@@ -621,12 +622,12 @@ export default function App(){
               <span className="font-black text-cyan-300 text-sm" style={{fontFamily:'Orbitron'}}>{totalScore.toLocaleString()}</span>
               <span className="text-[11px] font-mono text-white/45">• {gamesPlayedDistinct}/50</span>
             </div>
-            <button onClick={()=>{setShowDaily(true); playClick()}} className="relative px-3 py-1.5 rounded-full bg-gradient-to-r from-amber-400 to-orange-500 text-black font-black text-xs tracking-widest">🎯 DIARIO {dailyList.filter(d=> dailyDone[d.id]).length}/3</button>
-            <button onClick={()=>{setShowAch(true); playClick()}} className="px-3 py-1.5 rounded-full glass font-mono text-xs tracking-widest text-white/80 hover:bg-white/10">🏆 LOGROS {Object.values(achUnlocked).filter(Boolean).length}/{ACHIEVEMENTS.length}</button>
+              <button onClick={()=>{setShowDaily(true); playClick()}} aria-label="Ver desafíos diarios" className="relative px-3 py-1.5 rounded-full bg-gradient-to-r from-amber-400 to-orange-500 text-black font-black text-xs tracking-widest">🎯 DIARIO {dailyList.filter(d=> dailyDone[d.id]).length}/3</button>
+            <button onClick={()=>{setShowAch(true); playClick()}} aria-label="Ver logros" className="px-3 py-1.5 rounded-full glass font-mono text-xs tracking-widest text-white/80 hover:bg-white/10">🏆 LOGROS {Object.values(achUnlocked).filter(Boolean).length}/{ACHIEVEMENTS.length}</button>
             <span className={`hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-mono tracking-widest border ${syncStatus==='ok'?'bg-emerald-500/15 border-emerald-400/30 text-emerald-300': syncStatus==='syncing'?'bg-amber-500/15 border-amber-400/30 text-amber-300 animate-pulse': syncStatus==='error'?'bg-red-500/10 border-red-400/20 text-red-300':'glass border-white/10 text-white/45'}`} title={syncStatus==='ok'?'Sincronizado con terminal': syncStatus==='syncing'?'Sincronizando...': 'Sin conexión terminal'}>● {syncStatus==='ok'?'SYNC': syncStatus==='syncing'?'SYNC...': syncStatus==='error'?'OFFLINE':'SYNC'}</span>
-            <button onClick={()=>setRgbMode(!rgbMode)} className={`w-8 h-8 rounded-full flex items-center justify-center hover:bg-white/10 text-sm border ${rgbMode?'bg-gradient-to-br from-cyan-400 to-fuchsia-500 text-black border-white/20 neon-pulse':'glass text-white/80 border-white/10'}`} title="RGB Mode">🌈</button>
-            <button onClick={handleShare} className="w-8 h-8 rounded-full glass flex items-center justify-center hover:bg-white/10 text-white/80 text-xs border border-white/10" title="Compartir puntuación">↗</button>
-            <button onClick={()=>setMuted(!muted)} className="w-8 h-8 rounded-full glass flex items-center justify-center hover:bg-white/10 text-white/80 text-sm">{muted?'🔇':'🔊'}</button>
+            <button onClick={()=>setRgbMode(!rgbMode)} aria-label="Alternar modo RGB" className={`w-8 h-8 rounded-full flex items-center justify-center hover:bg-white/10 text-sm border ${rgbMode?'bg-gradient-to-br from-cyan-400 to-fuchsia-500 text-black border-white/20 neon-pulse':'glass text-white/80 border-white/10'}`} title="RGB Mode">🌈</button>
+            <button onClick={handleShare} aria-label="Compartir puntuación NEO ARCADE" className="w-8 h-8 rounded-full glass flex items-center justify-center hover:bg-white/10 text-white/80 text-xs border border-white/10" title="Compartir puntuación">↗</button>
+            <button onClick={()=>setMuted(!muted)} aria-label={muted?'Activar sonido':'Silenciar'} className="w-8 h-8 rounded-full glass flex items-center justify-center hover:bg-white/10 text-white/80 text-sm">{muted?'🔇':'🔊'}</button>
           </div>
         </div>
 
@@ -655,7 +656,7 @@ export default function App(){
         </div>
       )}
 
-      <main className="max-w-[1400px] mx-auto px-3 sm:px-4 py-6 grid lg:grid-cols-[340px_1fr] gap-6">
+      <main id="arcade" className="max-w-[1400px] mx-auto px-3 sm:px-4 py-6 grid lg:grid-cols-[340px_1fr] gap-6">
         <div className="space-y-3">
           <p className="text-[11px] tracking-[0.3em] font-mono text-white/50 px-1">CABINAS ({filteredGames.length}/50) <span className="rgb-text font-black">RGB</span></p>
           <div className="grid grid-cols-1 gap-2.5 max-h-[68vh] overflow-auto pr-1 scrollbar-thin">
