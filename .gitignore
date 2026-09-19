@@ -1,0 +1,14 @@
+node_modules
+dist
+.env
+.env.local
+arcade-stats.json
+public/arcade-stats.json
+.DS_Store
+Thumbs.db
+*.log
+*.zip
+preview.err
+NEO-ARCADE-oficial.zip
+.vscode
+.idea

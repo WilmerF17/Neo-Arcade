@@ -1,0 +1,35 @@
+{
+  "name": "neo-arcade",
+  "private": true,
+  "version": "3.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview --host 0.0.0.0 --port 3000",
+    "deploy:vercel": "vercel --prod",
+    "deploy:netlify": "netlify deploy --prod --dir=dist",
+    "deploy:gh": "gh-pages -d dist",
+    "dashboard": "node scripts/terminal-dashboard.js",
+    "dev:sync": "vite & node scripts/terminal-dashboard.js",
+    "preview:sync": "vite preview & node scripts/terminal-dashboard.js",
+    "stats": "node -e \"import('fs').then(fs=>{console.log(fs.readFileSync('arcade-stats.json','utf-8'))})\"",
+    "stats:watch": "node scripts/terminal-dashboard.js"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.4",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.3",
+    "autoprefixer": "^10.4.20",
+    "png-to-ico": "^3.0.2",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.15",
+    "typescript": "^5.6.3",
+    "vite": "^6.0.3",
+    "vite-plugin-pwa": "^0.21.1"
+  }
+}
