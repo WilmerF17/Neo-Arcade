@@ -1,0 +1,16 @@
+/* TEAM */
+Developer: WilmerF17
+Role: Full Stack — NEO ARCADE 50 ELITE
+Site: https://wilmerf17.github.io/Neo-Arcade/
+Contact: WilmerF17@users.noreply.github.com
+From: 2026
+
+/* THANKS */
+React, Vite, Tailwind, Workbox, PWA
+
+/* SITE */
+Standards: HTML5, CSS3, ES2022
+Components: 50 games Canvas 2D + Web Audio
+Last update: 2026-09-19
+Language: es
+Doctype: HTML5
