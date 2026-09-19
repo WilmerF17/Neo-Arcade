@@ -156,7 +156,25 @@ export default defineConfig({
     devOptions: { enabled: false }
   })],
   server: { port: 3000, open: false },
-  preview: { port: 3000 }
+  preview: { port: 3000 },
+  build: {
+    chunkSizeWarningLimit: 600,
+    rollupOptions: {
+      output: {
+        manualChunks(id){
+          if(id.includes('node_modules')){
+            if(id.includes('react')) return 'vendor-react'
+            return 'vendor'
+          }
+          if(id.includes('src/games/')){
+            if(id.includes('Ultra') || id.includes('Elite')) return 'games-elite'
+            if(id.includes('Stack') || id.includes('Memory') || id.includes('Puzzle') || id.includes('Sudoku') || id.includes('Words') || id.includes('Chess')) return 'games-brain'
+            return 'games-arcade'
+          }
+        }
+      }
+    }
+  }
 })
 
 
