@@ -6,9 +6,11 @@ export default function PWAInstall(){
   const [showModal, setShowModal] = useState(false)
   const [installed, setInstalled] = useState(false)
   const [isIOS, setIsIOS] = useState(false)
+  const [isOperaGX, setIsOperaGX] = useState(false)
 
   useEffect(()=>{
     setIsIOS(/iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && (navigator as any).maxTouchPoints > 1))
+    setIsOperaGX(/OPR|Opera/.test(navigator.userAgent))
     if(window.matchMedia('(display-mode: standalone)').matches || (window.navigator as any).standalone) setInstalled(true)
     const onBefore = (e:any)=>{ e.preventDefault(); setDeferred(e); setShowBanner(true) }
     const onInstalled = ()=>{ setInstalled(true); setShowBanner(false); setDeferred(null); setShowModal(false) }
@@ -79,6 +81,31 @@ export default function PWAInstall(){
                   <p className="text-xs font-mono text-white/60">💡 También funciona en Chrome iOS: menú ⋮ → Añadir a pantalla de inicio</p>
                 </div>
               </div>
+            ) : isOperaGX ? (
+              <div className="mt-5 space-y-4">
+                <div className="glass rounded-xl p-3 border border-red-400/20 bg-red-400/10">
+                  <p className="text-sm font-bold text-white" style={{fontFamily:'Orbitron'}}>🎮 Opera GX detectado — ¡100% compatible!</p>
+                  <p className="text-xs font-mono text-white/70 mt-1">Opera GX es Chromium, usa el mismo motor que Chrome/Edge.</p>
+                </div>
+                <div>
+                  <p className="text-sm font-bold text-white" style={{fontFamily:'Orbitron'}}>Opera GX (PC):</p>
+                  <ol className="space-y-2 text-sm font-mono text-white/75 list-decimal list-inside">
+                    <li>Si ves el banner pulsa <span className="text-cyan-300 font-bold">INSTALAR</span> (recomendado)</li>
+                    <li>Si no: mira la barra de direcciones → icono <span className="text-cyan-300">⬇️/⊕ Instalar</span> a la derecha → Click</li>
+                    <li>Alternativa: menú <span className="text-cyan-300 font-bold">O Menu ≡ (arriba izquierda)</span> → <span className="text-cyan-300 font-bold">Instalar NEO ARCADE</span> o <span className="text-cyan-300 font-bold">Añadir a pantalla de inicio</span></li>
+                  </ol>
+                </div>
+                <div>
+                  <p className="text-sm font-bold text-white" style={{fontFamily:'Orbitron'}}>Opera GX Mobile (Android/iOS):</p>
+                  <ol className="space-y-2 text-sm font-mono text-white/75 list-decimal list-inside">
+                    <li>Menú <span className="text-cyan-300 font-bold">⋮</span> → <span className="text-cyan-300 font-bold">Añadir a pantalla de inicio</span></li>
+                    <li>Confirma → aparece como app nativa con icono NEO ARCADE</li>
+                  </ol>
+                </div>
+                <div className="glass rounded-xl p-3 border border-emerald-400/20 bg-emerald-400/10">
+                  <p className="text-xs font-mono text-emerald-300">✅ En Opera GX funciona offline, con GX Control y limitador. ¡Igual que en Chrome!</p>
+                </div>
+              </div>
             ) : (
               <div className="mt-5 space-y-4">
                 <div>
@@ -93,7 +120,7 @@ export default function PWAInstall(){
                   <p className="text-sm font-bold text-white" style={{fontFamily:'Orbitron'}}>Firefox / Otros:</p>
                   <ol className="space-y-2 text-sm font-mono text-white/75 list-decimal list-inside">
                     <li>Menú <span className="text-cyan-300 font-bold">☰</span> → <span className="text-cyan-300 font-bold">Añadir a pantalla de inicio</span> o marca como favorito</li>
-                    <li>En PC puedes usar Chrome/Edge para instalar como PWA completa</li>
+                    <li>En PC puedes usar Chrome/Edge/Opera GX para instalar como PWA completa</li>
                   </ol>
                 </div>
                 <div className="glass rounded-xl p-3 border border-emerald-400/20 bg-emerald-400/10">
