@@ -7,12 +7,17 @@
 ::-webkit-scrollbar-track { background: #0a0a0f; }
 ::-webkit-scrollbar-thumb { background: linear-gradient(#00ffff, #ff00ff); border-radius: 4px; }
 
+html { scroll-behavior: smooth; }
 body {
   background: #05050a;
   color: #e0e7ff;
   font-family: 'Rajdhani', sans-serif;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
+*:focus-visible { outline: 2px solid #00ffff; outline-offset: 2px; border-radius: 6px; }
+::selection { background: #00ffff; color: #000; }
 
 /* CRT scanlines */
 .crt::before {

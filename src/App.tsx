@@ -821,6 +821,35 @@ export default function App(){
         </div>
       </main>
 
+      {/* Contenido SEO: por qué jugar + cómo jugar + FAQ */}
+      <section className="max-w-[1400px] mx-auto px-3 sm:px-4 mt-8 grid lg:grid-cols-3 gap-4">
+        <div className="glass rounded-2xl p-5">
+          <h3 className="font-black text-white tracking-widest" style={{fontFamily:'Orbitron'}}>POR QUÉ NEO ARCADE</h3>
+          <p className="text-sm text-white/70 mt-2 leading-relaxed">50 cabinas RGB a 60fps con física real, progresión con XP y monedas, 42 logros y 3 desafíos diarios. PWA instalable, offline y sin anuncios. Inspirado en arcade clásico con neón 2026.</p>
+          <ul className="mt-3 space-y-1.5 text-xs font-mono text-white/55 list-disc list-inside">
+            <li>60fps Canvas 2D + Web Audio</li>
+            <li>Progreso guardado + sync terminal</li>
+            <li>Instala en PC y móvil en 1 click</li>
+          </ul>
+        </div>
+        <div className="glass rounded-2xl p-5">
+          <h3 className="font-black text-white tracking-widest" style={{fontFamily:'Orbitron'}}>CÓMO JUGAR</h3>
+          <ol className="mt-2 space-y-1.5 text-sm text-white/70 list-decimal list-inside font-mono">
+            <li>Elige cabina (FÁCIL/MEDIO/DIFÍCIL) por categoría ARCADE/BRAIN/PULSE/SKILL</li>
+            <li>Pulsa <span className="text-cyan-300 font-black">JUGAR [ENTER]</span> → WASD/Flechas, Espacio, R/P</li>
+            <li>Supera tu HI → ganas monedas + XP → subes nivel y desbloqueas logros</li>
+          </ol>
+          <p className="text-xs font-mono text-white/45 mt-3">Controles: WASD/Flechas, Mouse/Touch, Enter jugar, Esc pausar, R reiniciar.</p>
+        </div>
+        <div className="glass rounded-2xl p-5">
+          <h3 className="font-black text-white tracking-widest" style={{fontFamily:'Orbitron'}}>FAQ</h3>
+          <details className="mt-2 group"><summary className="cursor-pointer text-sm font-bold text-white/80">¿Es gratis y seguro?</summary><p className="text-xs font-mono text-white/60 mt-1">Sí, 100% gratis, sin anuncios, sin permisos raros. PWA verificada, CSP y HTTPS.</p></details>
+          <details className="group mt-2"><summary className="cursor-pointer text-sm font-bold text-white/80">¿Funciona offline?</summary><p className="text-xs font-mono text-white/60 mt-1">Sí, tras instalar se precachean 39 archivos con Workbox. Juega sin internet.</p></details>
+          <details className="group mt-2"><summary className="cursor-pointer text-sm font-bold text-white/80">¿Cómo instalar en iPhone?</summary><p className="text-xs font-mono text-white/60 mt-1">Safari → Compartir ⎙ → Añadir a pantalla de inicio. En Android/PC: menú ⋮ → Instalar.</p></details>
+          <details className="group mt-2"><summary className="cursor-pointer text-sm font-bold text-white/80">¿Dónde se guarda mi progreso?</summary><p className="text-xs font-mono text-white/60 mt-1">En tu navegador (localStorage) y sync a arcade-stats.json si usas el terminal local.</p></details>
+        </div>
+      </section>
+
       <div className="fixed bottom-4 right-4 z-50 flex flex-col gap-2 pointer-events-none">
         {toasts.map(t=>(
           <div key={t.id} className="glass rounded-xl px-4 py-3 border border-cyan-400/30 shadow-[0_0_20px_rgba(0,255,255,0.2)] min-w-[260px]">
