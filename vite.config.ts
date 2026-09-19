@@ -109,7 +109,7 @@ function arcadeSyncPlugin(){
 }
 
 export default defineConfig({
-  base: '/neo-arcade/',
+  base: '/Neo-Arcade/',
   plugins: [react(), arcadeSyncPlugin(), VitePWA({
     registerType: 'autoUpdate',
     includeAssets: ['favicon.ico','favicon.png','icon-*.png','icon.png','icon-master-1024.png','apple-touch-icon.png'],
@@ -117,9 +117,9 @@ export default defineConfig({
       name: 'NEO ARCADE — Sala Inmersiva 2026',
       short_name: 'NEO ARCADE',
       description: '50 cabinas RGB • 2026 • Sala inmersiva neón. 50 juegos ELITE 60fps, progreso, logros y desafíos diarios.',
-      start_url: '/neo-arcade/',
-      scope: '/neo-arcade/',
-      id: '/neo-arcade/',
+      start_url: '/Neo-Arcade/',
+      scope: '/Neo-Arcade/',
+      id: '/Neo-Arcade/',
       display: 'standalone',
       display_override: ['window-controls-overlay','standalone','browser'],
       orientation: 'any',

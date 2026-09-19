@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://wilmerf17.github.io/neo-arcade/sitemap.xml
+Sitemap: https://wilmerf17.github.io/Neo-Arcade/sitemap.xml
