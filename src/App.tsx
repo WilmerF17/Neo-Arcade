@@ -584,9 +584,9 @@ export default function App(){
 
   const handleShare = useCallback(async ()=>{
     const url = 'https://wilmerf17.github.io/Neo-Arcade/'
-    const text = `NEO ARCADE 50 ELITE — Nivel ${level} • ${totalScore.toLocaleString()} pts • ${gamesPlayedDistinct}/250 cabinas • ¡Juega ${GAMES[active].title} conmigo!`
+    const text = `Neo Elite 250 — Nivel ${level} • ${totalScore.toLocaleString()} pts • ${gamesPlayedDistinct}/250 cabinas • ¡Juega ${GAMES[active].title} conmigo!`
     try{
-      if(navigator.share){ await navigator.share({title:'NEO ARCADE', text, url}); addToast('¡Compartido!','Link copiado a tus apps') }
+      if(navigator.share){ await navigator.share({title:'Neo Elite 250', text, url}); addToast('¡Compartido!','Link copiado a tus apps') }
       else if(navigator.clipboard){ await navigator.clipboard.writeText(`${text} ${url}`); addToast('¡Link copiado!','Pégalo en WhatsApp/Twitter') }
       else { addToast(url, text.slice(0,60)) }
     }catch{}
@@ -639,7 +639,7 @@ export default function App(){
           <div className="absolute inset-0 opacity-30" style={{background:`radial-gradient(600px 400px at 50% 30%, rgba(0,255,255,0.22), transparent 70%), radial-gradient(500px 500px at 80% 80%, rgba(255,0,255,0.18), transparent 70%)`}}/>
           <div className="relative glass rounded-[28px] border border-cyan-400/30 max-w-[560px] w-full p-8 sm:p-10 text-center shadow-[0_0_50px_rgba(0,255,255,0.25)]">
             <img src="/icon.png" alt="NEO ARCADE" className="w-16 h-16 mx-auto rounded-2xl object-cover shadow-[0_0_24px_rgba(0,255,255,0.6)] border border-white/10 animate-float" onError={(e)=>{ (e.currentTarget as HTMLImageElement).style.display='none'}} />
-            <h2 className="mt-5 font-black text-white text-2xl sm:text-3xl tracking-widest" style={{fontFamily:'Orbitron'}}>NEO ARCADE</h2>
+            <h2 className="mt-5 font-black text-white text-2xl sm:text-3xl tracking-widest" style={{fontFamily:'Orbitron'}}>NEO ELITE 250</h2>
             <p className="text-[11px] tracking-[0.38em] font-mono text-cyan-300 mt-1">SALÓN INMERSIVO • 250 CABINAS • RGB • 2026</p>
             <div className="mt-6 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/10">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_#00ff88]"/>
@@ -666,7 +666,7 @@ export default function App(){
             <img src="/icon.png" alt="NEO" className={`w-10 h-10 rounded-xl object-cover shadow-[0_0_22px_rgba(0,255,255,0.6)] border border-white/10 ${rgbMode?'rgb-animate':''}`} style={{background:'linear-gradient(135deg, #00ffff, #ff00ff)'}} onError={(e)=>{ (e.currentTarget as HTMLImageElement).style.display='none'; const n=(e.currentTarget as HTMLImageElement).nextElementSibling as HTMLElement; if(n) n.style.display='flex'}} />
             <div className={`w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-400 to-fuchsia-500 hidden items-center justify-center font-black text-black text-lg shadow-[0_0_22px_rgba(0,255,255,0.6)] ${rgbMode?'rgb-animate':''}`} style={{fontFamily:'Orbitron'}}>N</div>
             <div>
-              <h1 className="font-black tracking-widest leading-none text-white text-[18px] sm:text-[22px]" style={{fontFamily:'Orbitron'}}>NEO ARCADE</h1>
+              <h1 className="font-black tracking-widest leading-none text-white text-[18px] sm:text-[22px]" style={{fontFamily:'Orbitron'}}>NEO ELITE 250</h1>
               <p className="text-[11px] tracking-[0.32em] text-cyan-300 font-mono -mt-1">SALÓN INMERSIVO • 250 CABINAS RGB</p>
             </div>
             <span className="hidden xl:inline-flex ml-2 px-2.5 py-1 rounded-full text-[10px] font-mono tracking-widest bg-white/10 border border-white/10 text-white/60">v4.0 • ELITE 250</span>
@@ -1017,8 +1017,8 @@ export default function App(){
       <PWAInstall />
 
       <footer className="max-w-[1400px] mx-auto px-4 pb-8 pt-2 text-center">
-        <p className="text-[11px] font-mono tracking-widest text-white/30">NEO ARCADE 50 ELITE v4.0 © 2026 — 250 juegos (50 activos + 10 CASINO + 190 ELITE) • Sistema monetario virtual • 18+ Simulado sin dinero real</p>
-        <p className="text-[11px] font-mono text-white/20 mt-1">Instalable en PC (Chrome/Edge/Opera GX → Instalar) y móvil • Funciona offline • <a href="https://github.com/WilmerF17/Neo-Arcade" target="_blank" rel="noreferrer" className="underline hover:text-cyan-300">GitHub</a> • <button onClick={handleShare} className="underline hover:text-cyan-300">Compartir ↗</button> • <span className="text-white/25">v4.0 ELITE 250 • {totalScore.toLocaleString()} pts totales</span></p>
+        <p className="text-[11px] font-mono tracking-widest text-white/30">Neo Elite 250 v5.0 © 2026 — 250 juegos • Casino virtual • Monetario 18+ sin dinero real • BRILLA</p>
+        <p className="text-[11px] font-mono text-white/20 mt-1">Instalable en PC (Chrome/Edge/Opera GX → Instalar) y móvil • Funciona offline • <a href="https://github.com/WilmerF17/Neo-Arcade" target="_blank" rel="noreferrer" className="underline hover:text-cyan-300">GitHub</a> • <button onClick={handleShare} className="underline hover:text-cyan-300">Compartir ↗</button> • <span className="text-white/25">v5.0 Neo Elite 250 • {totalScore.toLocaleString()} pts totales</span></p>
       </footer>
     </div>
   )

@@ -130,9 +130,9 @@ export default defineConfig({
     registerType: 'autoUpdate',
     includeAssets: ['favicon.ico','favicon.png','icon-*.png','icon.png','icon-master-1024.png','apple-touch-icon.png'],
     manifest: {
-      name: 'NEO ARCADE 50 ELITE — by WilmerF17',
-      short_name: 'NEO ARCADE 50',
-      description: '50 cabinas RGB by WilmerF17 • 2026 • Sala inmersiva neón. 50 juegos ELITE 60fps, progreso, logros y desafíos diarios.',
+      name: 'Neo Elite 250 — by WilmerF17',
+      short_name: 'Neo Elite 250',
+      description: '250 cabinas RGB by WilmerF17 • 2026 • Sala inmersiva neón. 250 juegos con casino virtual y monetario.',
       start_url: base,
       scope: base,
       id: base,
