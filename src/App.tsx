@@ -62,6 +62,7 @@ import LotteryGame from './games/LotteryGame'
 import CrashGame from './games/CrashGame'
 import MinesGame from './games/MinesGame'
 import PlaceholderGame from './games/PlaceholderGame'
+import ElitePhGame from './games/ElitePhGame'
 
 // --- ErrorBoundary profesional ---
 class GameErrorBoundary extends React.Component<{children:React.ReactNode, game: string}, {hasError:boolean, msg:string}>{
@@ -149,12 +150,33 @@ const GAMES: Record<GameId, GameMeta> = {
   mines:{ title:'MINES FIELD', subtitle:'MINAS • RIESGO', lang:'Java', color:'#00ffff', mech:'Minas', desc:'Abre casillas sin pisar mina.', icon:'💣', cat:'CASINO', diff:2 },
 }
 
-// Auto-generar 190 placeholders para llegar a 250 ELITE
+// Auto-generar 190 ELITE únicos — cada uno BRILLA con identidad propia
+const ELITE_TITLES=[
+  ['NEON','VOID','CYBER','QUANTUM','HYPER','ASTRO','PHANTOM','CRYSTAL','NOVA','ECLIPSE','PULSE','FUSION','PRISM','VORTEX','MEGA','ULTRA','TURBO','OMEGA','ALPHA','DELTA'],
+  ['STORM','BLAST','RUSH','DRIFT','SURGE','BREAK','SPIKE','WAVE','FLARE','STRIKE','FORCE','CORE','EDGE','GRID','PORTAL','NEXUS','DRIVE','BEAT','MIND','FURY']
+]
+const ELITE_ICONS=['🚀','🌀','💎','⚡','🔥','🌟','🎮','🎯','🧠','💥','🌌','🔮','🛸','🎲','🎨','🏆','💫','🌠','🎪','🏅','🧩','🎭','🫧','🌪️','🪐','🏍️','♟️','🐸','🏓','🎨']
+const ELITE_CATS:(GameMeta['cat'])[]=['ARCADE','BRAIN','PULSE','SKILL','CASINO']
+const ELITE_LANGS=['TypeScript','Rust','Go','Python','C++','Swift','Kotlin','Java']
+const ELITE_MECHS=['Reflex','Táctica','Ritmo','Timing','Fusión','Neón','Cuántico','Hiper','Orbital','Prisma']
 for(let i=61;i<=250;i++){
   const id=`ph${String(i).padStart(3,'0')}` as GameId
   if(!(id in GAMES)){
-    const colors=['#00ffff','#ff00ff','#ffdd00','#00ff88','#ff6b35','#8a2be2','#00aaff','#ff3355']
-    GAMES[id]={ title:`CABINA ${String(i).padStart(3,'0')}`, subtitle:'PRÓXIMAMENTE • ELITE', lang:'TypeScript', color:colors[i%colors.length], mech:'En desarrollo', desc:'Próximamente — cabina ELITE en desarrollo. ¡Vota tu favorita!', icon:'🧩', cat:'ARCADE', diff:1 as const }
+    const a=ELITE_TITLES[0][i % ELITE_TITLES[0].length]
+    const b=ELITE_TITLES[1][(i*7) % ELITE_TITLES[1].length]
+    const colors=['#00ffff','#ff00ff','#ffdd00','#00ff88','#ff6b35','#8a2be2','#00aaff','#ff3355','#ffffff','#ffaa00']
+    const color=colors[i % colors.length]
+    const icon=ELITE_ICONS[i % ELITE_ICONS.length]
+    const cat=ELITE_CATS[i % ELITE_CATS.length]
+    const diff=(i%3+1) as 1|2|3
+    const lang=ELITE_LANGS[i % ELITE_LANGS.length]
+    const mech=ELITE_MECHS[i % ELITE_MECHS.length]
+    GAMES[id]={
+      title:`${a} ${b} ${String(i).padStart(3,'0')}`,
+      subtitle:`ELITE • ${mech.toUpperCase()} ${cat}`,
+      lang, color, mech, icon, cat, diff,
+      desc:`Cabina ELITE ${i} — ${mech} neón 60fps. ¡BRILLA y domina el ranking!`
+    }
   }
 }
 
@@ -638,7 +660,7 @@ export default function App(){
         </div>
       )}
 
-      <header className="sticky top-0 z-30 backdrop-blur-xl bg-black/30 border-b border-white/10">
+      <header className="sticky top-0 z-30 backdrop-blur-xl bg-black/30 border-b border-white/10 shine-sweep">
         <div className="max-w-[1400px] mx-auto px-3 sm:px-4 py-3 flex flex-col lg:flex-row lg:items-center justify-between gap-3">
           <div className="flex items-center gap-3">
             <img src="/icon.png" alt="NEO" className={`w-10 h-10 rounded-xl object-cover shadow-[0_0_22px_rgba(0,255,255,0.6)] border border-white/10 ${rgbMode?'rgb-animate':''}`} style={{background:'linear-gradient(135deg, #00ffff, #ff00ff)'}} onError={(e)=>{ (e.currentTarget as HTMLImageElement).style.display='none'; const n=(e.currentTarget as HTMLImageElement).nextElementSibling as HTMLElement; if(n) n.style.display='flex'}} />
@@ -842,7 +864,7 @@ export default function App(){
                   {active==='lottery' && <LotteryGame onScore={handleScore} isStarted={started} onBet={handleBet} onWin={handleWin}/>}
                   {active==='crash' && <CrashGame onScore={handleScore} isStarted={started} onBet={handleBet} onWin={handleWin}/>}
                   {active==='mines' && <MinesGame onScore={handleScore} isStarted={started} onBet={handleBet} onWin={handleWin}/>}
-                  {active.startsWith('ph') && <PlaceholderGame onScore={handleScore} isStarted={started} title={GAMES[active]?.title}/>}
+                  {active.startsWith('ph') && <ElitePhGame onScore={handleScore} isStarted={started} title={GAMES[active]?.title} color={GAMES[active]?.color}/>}
                 </div>
                 </GameErrorBoundary>
               </div>
