@@ -183,6 +183,7 @@ export default defineConfig({
             return 'vendor'
           }
           if(id.includes('src/games/')){
+            if(id.includes('Slots') || id.includes('Roulette') || id.includes('Blackjack') || id.includes('Poker') || id.includes('Dice') || id.includes('CoinFlip') || id.includes('Scratch') || id.includes('Lottery') || id.includes('Crash') || id.includes('Mines')) return 'games-casino'
             if(id.includes('Ultra') || id.includes('Elite')) return 'games-elite'
             if(id.includes('Stack') || id.includes('Memory') || id.includes('Puzzle') || id.includes('Sudoku') || id.includes('Words') || id.includes('Chess')) return 'games-brain'
             return 'games-arcade'

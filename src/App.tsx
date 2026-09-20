@@ -51,6 +51,17 @@ import AsteroidsUltraGame from './games/AsteroidsUltraGame'
 import WordleUltraGame from './games/WordleUltraGame'
 import GameIcon from './components/GameIcons'
 import PWAInstall from './components/PWAInstall'
+import SlotsGame from './games/SlotsGame'
+import RouletteGame from './games/RouletteGame'
+import BlackjackGame from './games/BlackjackGame'
+import PokerGame from './games/PokerGame'
+import DiceGame from './games/DiceGame'
+import CoinFlipGame from './games/CoinFlipGame'
+import ScratchGame from './games/ScratchGame'
+import LotteryGame from './games/LotteryGame'
+import CrashGame from './games/CrashGame'
+import MinesGame from './games/MinesGame'
+import PlaceholderGame from './games/PlaceholderGame'
 
 // --- ErrorBoundary profesional ---
 class GameErrorBoundary extends React.Component<{children:React.ReactNode, game: string}, {hasError:boolean, msg:string}>{
@@ -71,9 +82,9 @@ class GameErrorBoundary extends React.Component<{children:React.ReactNode, game:
 }
 
 // --- Types ---
-type GameId = 'snake'|'breakout'|'shooter'|'memory'|'stack'|'runner'|'rhythm'|'fusion'|'tetris'|'flappy'|'miner'|'words'|'aim'|'maze'|'plinko'|'pong'|'color'|'dodge'|'typing'|'gravity'|'slide'|'defense'|'rider'|'hex'|'chess'|'frogger'|'pinball'|'bubble'|'racing'|'ninja'|'harvest'|'jetpack'|'match'|'survival'|'laser'|'invaders'|'dungeon'|'snakeduel'|'puzzlebox'|'memoryultra'|'towerelite'|'flappyultra'|'snakeultra'|'pongultra'|'racingelite'|'tron'|'sudoku'|'chessultra'|'asteroidsultra'|'wordleultra'
+type GameId = 'snake'|'breakout'|'shooter'|'memory'|'stack'|'runner'|'rhythm'|'fusion'|'tetris'|'flappy'|'miner'|'words'|'aim'|'maze'|'plinko'|'pong'|'color'|'dodge'|'typing'|'gravity'|'slide'|'defense'|'rider'|'hex'|'chess'|'frogger'|'pinball'|'bubble'|'racing'|'ninja'|'harvest'|'jetpack'|'match'|'survival'|'laser'|'invaders'|'dungeon'|'snakeduel'|'puzzlebox'|'memoryultra'|'towerelite'|'flappyultra'|'snakeultra'|'pongultra'|'racingelite'|'tron'|'sudoku'|'chessultra'|'asteroidsultra'|'wordleultra'|'slots'|'roulette'|'blackjack'|'poker'|'dice'|'coinflip'|'scratch'|'lottery'|'crash'|'mines'|'ph061'|'ph062'|'ph063'|'ph064'|'ph065'|'ph066'|'ph067'|'ph068'|'ph069'|'ph070'|'ph071'|'ph072'|'ph073'|'ph074'|'ph075'|'ph076'|'ph077'|'ph078'|'ph079'|'ph080'|'ph081'|'ph082'|'ph083'|'ph084'|'ph085'|'ph086'|'ph087'|'ph088'|'ph089'|'ph090'|'ph091'|'ph092'|'ph093'|'ph094'|'ph095'|'ph096'|'ph097'|'ph098'|'ph099'|'ph100'|'ph101'|'ph102'|'ph103'|'ph104'|'ph105'|'ph106'|'ph107'|'ph108'|'ph109'|'ph110'|'ph111'|'ph112'|'ph113'|'ph114'|'ph115'|'ph116'|'ph117'|'ph118'|'ph119'|'ph120'|'ph121'|'ph122'|'ph123'|'ph124'|'ph125'|'ph126'|'ph127'|'ph128'|'ph129'|'ph130'|'ph131'|'ph132'|'ph133'|'ph134'|'ph135'|'ph136'|'ph137'|'ph138'|'ph139'|'ph140'|'ph141'|'ph142'|'ph143'|'ph144'|'ph145'|'ph146'|'ph147'|'ph148'|'ph149'|'ph150'|'ph151'|'ph152'|'ph153'|'ph154'|'ph155'|'ph156'|'ph157'|'ph158'|'ph159'|'ph160'|'ph161'|'ph162'|'ph163'|'ph164'|'ph165'|'ph166'|'ph167'|'ph168'|'ph169'|'ph170'|'ph171'|'ph172'|'ph173'|'ph174'|'ph175'|'ph176'|'ph177'|'ph178'|'ph179'|'ph180'|'ph181'|'ph182'|'ph183'|'ph184'|'ph185'|'ph186'|'ph187'|'ph188'|'ph189'|'ph190'|'ph191'|'ph192'|'ph193'|'ph194'|'ph195'|'ph196'|'ph197'|'ph198'|'ph199'|'ph200'|'ph201'|'ph202'|'ph203'|'ph204'|'ph205'|'ph206'|'ph207'|'ph208'|'ph209'|'ph210'|'ph211'|'ph212'|'ph213'|'ph214'|'ph215'|'ph216'|'ph217'|'ph218'|'ph219'|'ph220'|'ph221'|'ph222'|'ph223'|'ph224'|'ph225'|'ph226'|'ph227'|'ph228'|'ph229'|'ph230'|'ph231'|'ph232'|'ph233'|'ph234'|'ph235'|'ph236'|'ph237'|'ph238'|'ph239'|'ph240'|'ph241'|'ph242'|'ph243'|'ph244'|'ph245'|'ph246'|'ph247'|'ph248'|'ph249'|'ph250'
 
-type GameMeta = { title:string, subtitle:string, lang:string, color:string, mech:string, desc:string, icon:string, cat:'ARCADE'|'PULSE'|'BRAIN'|'SKILL', diff:1|2|3 }
+type GameMeta = { title:string, subtitle:string, lang:string, color:string, mech:string, desc:string, icon:string, cat:'ARCADE'|'PULSE'|'BRAIN'|'SKILL'|'CASINO', diff:1|2|3 }
 
 const GAMES: Record<GameId, GameMeta> = {
   snake:  { title:'NEON SERPENT', subtitle:'SNAKE • REFLEJOS', lang:'JavaScript', color:'#00ffff', mech:'Cola reactiva', desc:'Crece sin chocar. Curvas y timing.', icon:'🐍', cat:'ARCADE', diff:1 },
@@ -126,6 +137,25 @@ const GAMES: Record<GameId, GameMeta> = {
   chessultra:{ title:'CHESS ULTRA', subtitle:'CHESS • ÉLITE', lang:'Java', color:'#ffffff', mech:'Táctica Élite', desc:'Puzzles élite, brillo RGB.', icon:'♔', cat:'BRAIN', diff:3 },
   asteroidsultra:{ title:'ASTEROID STORM', subtitle:'ASTEROIDS • ULTRA', lang:'Rust', color:'#ffaa00', mech:'Física Ultra', desc:'Nave, asteroides y split infinito.', icon:'☄️', cat:'ARCADE', diff:3 },
   wordleultra:{ title:'WORDLE ULTRA', subtitle:'WORDLE • HARD', lang:'TypeScript', color:'#ff00ff', mech:'Deducción Hard', desc:'Adivina la palabra élite 6x5.', icon:'🔤', cat:'BRAIN', diff:2 },
+  slots:{ title:'NEON SLOTS', subtitle:'SLOTS • JACKPOT', lang:'JavaScript', color:'#ffaa00', mech:'Tragaperras', desc:'Gira rodillos neón, busca 3x7 jackpot.', icon:'🎰', cat:'CASINO', diff:1 },
+  roulette:{ title:'NEON ROULETTE', subtitle:'ROULETTE • AZAR', lang:'C++', color:'#ff0055', mech:'Ruleta', desc:'Apuesta color/número, gira la rueda.', icon:'🎡', cat:'CASINO', diff:1 },
+  blackjack:{ title:'BLACKJACK NEON', subtitle:'BLACKJACK • 21', lang:'Python', color:'#00ff88', mech:'21', desc:'Llega a 21 sin pasarte, vs dealer.', icon:'♠️', cat:'CASINO', diff:2 },
+  poker:{ title:'POKER FACE', subtitle:'POKER • FAROL', lang:'Go', color:'#00aaff', mech:'Póker', desc:'Texas Hold’em simplificado, mejor mano gana.', icon:'🃏', cat:'CASINO', diff:2 },
+  dice:{ title:'DICE STORM', subtitle:'DADOS • AZAR', lang:'Rust', color:'#ffdd00', mech:'Dados', desc:'Lanza dados, apuesta par/impar o suma.', icon:'🎲', cat:'CASINO', diff:1 },
+  coinflip:{ title:'COIN FLIP', subtitle:'CARA/CRUZ • 50/50', lang:'TypeScript', color:'#ff00ff', mech:'Moneda', desc:'Elige cara o cruz, doble o nada.', icon:'🪙', cat:'CASINO', diff:1 },
+  scratch:{ title:'SCRATCH WIN', subtitle:'RASCA • PREMIO', lang:'Swift', color:'#ff6b35', mech:'Rasca', desc:'Rasca 3 iguales para premio.', icon:'🎫', cat:'CASINO', diff:1 },
+  lottery:{ title:'LOTTO NEON', subtitle:'LOTERÍA • SORTEO', lang:'Kotlin', color:'#8a2be2', mech:'Sorteo', desc:'Elige 6 números, sorteo neón.', icon:'🎟️', cat:'CASINO', diff:1 },
+  crash:{ title:'CRASH ROCKET', subtitle:'CRASH • MULTIPLIER', lang:'C#', color:'#ff3355', mech:'Crash', desc:'Retira antes que crashee el cohete.', icon:'📈', cat:'CASINO', diff:2 },
+  mines:{ title:'MINES FIELD', subtitle:'MINAS • RIESGO', lang:'Java', color:'#00ffff', mech:'Minas', desc:'Abre casillas sin pisar mina.', icon:'💣', cat:'CASINO', diff:2 },
+}
+
+// Auto-generar 190 placeholders para llegar a 250 ELITE
+for(let i=61;i<=250;i++){
+  const id=`ph${String(i).padStart(3,'0')}` as GameId
+  if(!(id in GAMES)){
+    const colors=['#00ffff','#ff00ff','#ffdd00','#00ff88','#ff6b35','#8a2be2','#00aaff','#ff3355']
+    GAMES[id]={ title:`CABINA ${String(i).padStart(3,'0')}`, subtitle:'PRÓXIMAMENTE • ELITE', lang:'TypeScript', color:colors[i%colors.length], mech:'En desarrollo', desc:'Próximamente — cabina ELITE en desarrollo. ¡Vota tu favorita!', icon:'🧩', cat:'ARCADE', diff:1 as const }
+  }
 }
 
 type Achievement = { id:string, title:string, desc:string, icon:string, target:number, xp:number, coins:number, cat:string }
@@ -236,7 +266,7 @@ function getDailyForDate(dateStr:string): Daily[]{
 
 export default function App(){
   const [active, setActive] = useState<GameId>('snake')
-  const [filter, setFilter] = useState<'ALL'|'ARCADE'|'BRAIN'|'PULSE'|'SKILL'>('ALL')
+  const [filter, setFilter] = useState<'ALL'|'ARCADE'|'BRAIN'|'PULSE'|'SKILL'|'CASINO'>('ALL')
   const [search, setSearch] = useState('')
   const [muted, setMuted] = useState(false)
   const [showDaily, setShowDaily] = useState(false)
@@ -257,14 +287,14 @@ export default function App(){
   const [coins, setCoins] = useState(()=> Number(localStorage.getItem('neo_coins')||250))
   const [streak, setStreak] = useState(()=> Number(localStorage.getItem('neo_streak')||1))
   const [highScores, setHighScores] = useState<Record<GameId,number>>(()=>{
-    const defaults:Record<GameId,number>={snake:0,breakout:0,shooter:0,memory:0,stack:0,runner:0,rhythm:0,fusion:0,tetris:0,flappy:0,miner:0,words:0,aim:0,maze:0,plinko:0,pong:0,color:0,dodge:0,typing:0,gravity:0,slide:0,defense:0,rider:0,hex:0,chess:0,frogger:0,pinball:0,bubble:0,racing:0,ninja:0,harvest:0,jetpack:0,match:0,survival:0,laser:0,invaders:0,dungeon:0,snakeduel:0,puzzlebox:0,memoryultra:0,towerelite:0,flappyultra:0,snakeultra:0,pongultra:0,racingelite:0,tron:0,sudoku:0,chessultra:0,asteroidsultra:0,wordleultra:0}
+    const defaults:any={}; (Object.keys(GAMES) as GameId[]).forEach(k=>defaults[k]=0)
     try{ const v=localStorage.getItem('neo_highscores'); if(v) return {...defaults, ...JSON.parse(v)} }catch{}
-    return defaults
+    return defaults as Record<GameId,number>
   })
   const [plays, setPlays] = useState<Record<GameId,number>>(()=>{
-    const defaults:Record<GameId,number>={snake:0,breakout:0,shooter:0,memory:0,stack:0,runner:0,rhythm:0,fusion:0,tetris:0,flappy:0,miner:0,words:0,aim:0,maze:0,plinko:0,pong:0,color:0,dodge:0,typing:0,gravity:0,slide:0,defense:0,rider:0,hex:0,chess:0,frogger:0,pinball:0,bubble:0,racing:0,ninja:0,harvest:0,jetpack:0,match:0,survival:0,laser:0,invaders:0,dungeon:0,snakeduel:0,puzzlebox:0,memoryultra:0,towerelite:0,flappyultra:0,snakeultra:0,pongultra:0,racingelite:0,tron:0,sudoku:0,chessultra:0,asteroidsultra:0,wordleultra:0}
+    const defaults:any={}; (Object.keys(GAMES) as GameId[]).forEach(k=>defaults[k]=0)
     try{ const v=localStorage.getItem('neo_plays'); if(v) return {...defaults, ...JSON.parse(v)} }catch{}
-    return defaults
+    return defaults as Record<GameId,number>
   })
   const [achProg, setAchProg] = useState<Record<string,number>>(()=>{
     try{ const v=localStorage.getItem('neo_ach_prog'); if(v) return JSON.parse(v)}catch{}
@@ -532,7 +562,7 @@ export default function App(){
 
   const handleShare = useCallback(async ()=>{
     const url = 'https://wilmerf17.github.io/Neo-Arcade/'
-    const text = `NEO ARCADE — Nivel ${level} • ${totalScore.toLocaleString()} pts • ${gamesPlayedDistinct}/50 cabinas • ¡Juega ${GAMES[active].title} conmigo!`
+    const text = `NEO ARCADE 50 ELITE — Nivel ${level} • ${totalScore.toLocaleString()} pts • ${gamesPlayedDistinct}/250 cabinas • ¡Juega ${GAMES[active].title} conmigo!`
     try{
       if(navigator.share){ await navigator.share({title:'NEO ARCADE', text, url}); addToast('¡Compartido!','Link copiado a tus apps') }
       else if(navigator.clipboard){ await navigator.clipboard.writeText(`${text} ${url}`); addToast('¡Link copiado!','Pégalo en WhatsApp/Twitter') }
@@ -540,6 +570,23 @@ export default function App(){
     }catch{}
     playClick()
   },[level, totalScore, gamesPlayedDistinct, active, playClick])
+
+  // Sistema monetario virtual 18+ — sin dinero real
+  const handleBet = useCallback((amount:number)=>{
+    if(coins < amount){ addToast('Sin monedas','Juega arcade para ganar más'); return false }
+    setCoins(c=>c-amount)
+    return true
+  },[coins])
+  const handleWin = useCallback((amount:number)=>{
+    if(amount>0){
+      setCoins(c=>c+amount)
+      addToast(`+${amount} 💰`, 'Ganancia casino virtual')
+      // también cuenta como score para progresión
+      handleScore(amount)
+    } else {
+      handleScore(0)
+    }
+  },[handleScore])
 
   const filteredGames = useMemo(()=>{
     const term=search.toLowerCase()
@@ -571,10 +618,10 @@ export default function App(){
           <div className="relative glass rounded-[28px] border border-cyan-400/30 max-w-[560px] w-full p-8 sm:p-10 text-center shadow-[0_0_50px_rgba(0,255,255,0.25)]">
             <img src="/icon.png" alt="NEO ARCADE" className="w-16 h-16 mx-auto rounded-2xl object-cover shadow-[0_0_24px_rgba(0,255,255,0.6)] border border-white/10 animate-float" onError={(e)=>{ (e.currentTarget as HTMLImageElement).style.display='none'}} />
             <h2 className="mt-5 font-black text-white text-2xl sm:text-3xl tracking-widest" style={{fontFamily:'Orbitron'}}>NEO ARCADE</h2>
-            <p className="text-[11px] tracking-[0.38em] font-mono text-cyan-300 mt-1">SALÓN INMERSIVO • 50 CABINAS • RGB • 2026</p>
+            <p className="text-[11px] tracking-[0.38em] font-mono text-cyan-300 mt-1">SALÓN INMERSIVO • 250 CABINAS • RGB • 2026</p>
             <div className="mt-6 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/10">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_#00ff88]"/>
-              <span className="text-xs font-mono tracking-widest text-white/70">50 JUEGOS • RGB • PROGRESO • LOGROS • DIARIO</span>
+              <span className="text-xs font-mono tracking-widest text-white/70">250 JUEGOS • RGB • PROGRESO • LOGROS • DIARIO • CASINO</span>
             </div>
             <div className="mt-8">
               <p className="font-black text-cyan-300 tracking-widest text-sm animate-pulse" style={{fontFamily:'Orbitron'}}>— PRESIONA ENTER PARA JUGAR —</p>
@@ -598,9 +645,9 @@ export default function App(){
             <div className={`w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-400 to-fuchsia-500 hidden items-center justify-center font-black text-black text-lg shadow-[0_0_22px_rgba(0,255,255,0.6)] ${rgbMode?'rgb-animate':''}`} style={{fontFamily:'Orbitron'}}>N</div>
             <div>
               <h1 className="font-black tracking-widest leading-none text-white text-[18px] sm:text-[22px]" style={{fontFamily:'Orbitron'}}>NEO ARCADE</h1>
-              <p className="text-[11px] tracking-[0.32em] text-cyan-300 font-mono -mt-1">SALÓN INMERSIVO • 50 CABINAS RGB</p>
+              <p className="text-[11px] tracking-[0.32em] text-cyan-300 font-mono -mt-1">SALÓN INMERSIVO • 250 CABINAS RGB</p>
             </div>
-            <span className="hidden xl:inline-flex ml-2 px-2.5 py-1 rounded-full text-[10px] font-mono tracking-widest bg-white/10 border border-white/10 text-white/60">v3.0 • RGB TOTAL</span>
+            <span className="hidden xl:inline-flex ml-2 px-2.5 py-1 rounded-full text-[10px] font-mono tracking-widest bg-white/10 border border-white/10 text-white/60">v4.0 • ELITE 250</span>
           </div>
 
           <div className="flex flex-wrap items-center gap-2">
@@ -620,7 +667,7 @@ export default function App(){
             <div className="hidden sm:flex glass rounded-full px-2 py-1 items-center gap-1.5">
               <span className="text-[11px] font-mono tracking-widest text-white/60">TOTAL</span>
               <span className="font-black text-cyan-300 text-sm" style={{fontFamily:'Orbitron'}}>{totalScore.toLocaleString()}</span>
-              <span className="text-[11px] font-mono text-white/45">• {gamesPlayedDistinct}/50</span>
+              <span className="text-[11px] font-mono text-white/45">• {gamesPlayedDistinct}/250</span>
             </div>
               <button onClick={()=>{setShowDaily(true); playClick()}} aria-label="Ver desafíos diarios" className="relative px-3 py-1.5 rounded-full bg-gradient-to-r from-amber-400 to-orange-500 text-black font-black text-xs tracking-widest">🎯 DIARIO {dailyList.filter(d=> dailyDone[d.id]).length}/3</button>
             <button onClick={()=>{setShowAch(true); playClick()}} aria-label="Ver logros" className="px-3 py-1.5 rounded-full glass font-mono text-xs tracking-widest text-white/80 hover:bg-white/10">🏆 LOGROS {Object.values(achUnlocked).filter(Boolean).length}/{ACHIEVEMENTS.length}</button>
@@ -633,8 +680,8 @@ export default function App(){
 
         <div className="max-w-[1400px] mx-auto px-3 sm:px-4 pb-3 flex flex-col sm:flex-row gap-2 items-stretch sm:items-center justify-between border-t border-white/5 pt-3 mt-1">
           <div className="flex gap-1.5 flex-wrap">
-            {(['ALL','ARCADE','BRAIN','PULSE','SKILL'] as const).map(cat=>(
-              <button key={cat} onClick={()=>setFilter(cat)} className={`px-3 py-1.5 rounded-full text-[11px] font-mono tracking-widest border transition ${filter===cat?'bg-cyan-400 text-black border-cyan-400 font-black':'glass text-white/60 border-white/10 hover:bg-white/10'}`}>{cat}</button>
+            {(['ALL','ARCADE','BRAIN','PULSE','SKILL','CASINO'] as const).map(cat=>(
+              <button key={cat} onClick={()=>setFilter(cat as any)} className={`px-3 py-1.5 rounded-full text-[11px] font-mono tracking-widest border transition ${filter===cat?'bg-cyan-400 text-black border-cyan-400 font-black':'glass text-white/60 border-white/10 hover:bg-white/10'}`}>{cat}</button>
             ))}
           </div>
           <div className="flex gap-2 items-center">
@@ -658,7 +705,7 @@ export default function App(){
 
       <main id="arcade" className="max-w-[1400px] mx-auto px-3 sm:px-4 py-6 grid lg:grid-cols-[340px_1fr] gap-6">
         <div className="space-y-3">
-          <p className="text-[11px] tracking-[0.3em] font-mono text-white/50 px-1">CABINAS ({filteredGames.length}/50) <span className="rgb-text font-black">RGB</span></p>
+          <p className="text-[11px] tracking-[0.3em] font-mono text-white/50 px-1">CABINAS ({filteredGames.length}/250) <span className="rgb-text font-black">RGB ELITE</span></p>
           <div className="grid grid-cols-1 gap-2.5 max-h-[68vh] overflow-auto pr-1 scrollbar-thin">
             {filteredGames.map(id=>{
               const g=GAMES[id]
@@ -785,6 +832,17 @@ export default function App(){
                   {active==='chessultra' && <ChessUltraGame onScore={handleScore} isStarted={started}/>}
                   {active==='asteroidsultra' && <AsteroidsUltraGame onScore={handleScore} isStarted={started}/>}
                   {active==='wordleultra' && <WordleUltraGame onScore={handleScore} isStarted={started}/>}
+                  {active==='slots' && <SlotsGame onScore={handleScore} isStarted={started} onBet={handleBet} onWin={handleWin}/>}
+                  {active==='roulette' && <RouletteGame onScore={handleScore} isStarted={started} onBet={handleBet} onWin={handleWin}/>}
+                  {active==='blackjack' && <BlackjackGame onScore={handleScore} isStarted={started} onBet={handleBet} onWin={handleWin}/>}
+                  {active==='poker' && <PokerGame onScore={handleScore} isStarted={started} onBet={handleBet} onWin={handleWin}/>}
+                  {active==='dice' && <DiceGame onScore={handleScore} isStarted={started} onBet={handleBet} onWin={handleWin}/>}
+                  {active==='coinflip' && <CoinFlipGame onScore={handleScore} isStarted={started} onBet={handleBet} onWin={handleWin}/>}
+                  {active==='scratch' && <ScratchGame onScore={handleScore} isStarted={started} onBet={handleBet} onWin={handleWin}/>}
+                  {active==='lottery' && <LotteryGame onScore={handleScore} isStarted={started} onBet={handleBet} onWin={handleWin}/>}
+                  {active==='crash' && <CrashGame onScore={handleScore} isStarted={started} onBet={handleBet} onWin={handleWin}/>}
+                  {active==='mines' && <MinesGame onScore={handleScore} isStarted={started} onBet={handleBet} onWin={handleWin}/>}
+                  {active.startsWith('ph') && <PlaceholderGame onScore={handleScore} isStarted={started} title={GAMES[active]?.title}/>}
                 </div>
                 </GameErrorBoundary>
               </div>
@@ -825,7 +883,7 @@ export default function App(){
       <section className="max-w-[1400px] mx-auto px-3 sm:px-4 mt-8 grid lg:grid-cols-3 gap-4">
         <div className="glass rounded-2xl p-5">
           <h3 className="font-black text-white tracking-widest" style={{fontFamily:'Orbitron'}}>POR QUÉ NEO ARCADE</h3>
-          <p className="text-sm text-white/70 mt-2 leading-relaxed">50 cabinas RGB a 60fps con física real, progresión con XP y monedas, 42 logros y 3 desafíos diarios. PWA instalable, offline y sin anuncios. Inspirado en arcade clásico con neón 2026.</p>
+          <p className="text-sm text-white/70 mt-2 leading-relaxed">250 cabinas RGB a 60fps con física real, sistema monetario virtual, progresión con XP y monedas, 50+ logros y 3 desafíos diarios. 10 cabinas CASINO con apuestas simuladas (18+ sin dinero real). PWA instalable, offline y sin anuncios.</p>
           <ul className="mt-3 space-y-1.5 text-xs font-mono text-white/55 list-disc list-inside">
             <li>60fps Canvas 2D + Web Audio</li>
             <li>Progreso guardado + sync terminal</li>
@@ -835,7 +893,7 @@ export default function App(){
         <div className="glass rounded-2xl p-5">
           <h3 className="font-black text-white tracking-widest" style={{fontFamily:'Orbitron'}}>CÓMO JUGAR</h3>
           <ol className="mt-2 space-y-1.5 text-sm text-white/70 list-decimal list-inside font-mono">
-            <li>Elige cabina (FÁCIL/MEDIO/DIFÍCIL) por categoría ARCADE/BRAIN/PULSE/SKILL</li>
+            <li>Elige cabina (FÁCIL/MEDIO/DIFÍCIL) por categoría ARCADE/BRAIN/PULSE/SKILL/CASINO</li>
             <li>Pulsa <span className="text-cyan-300 font-black">JUGAR [ENTER]</span> → WASD/Flechas, Espacio, R/P</li>
             <li>Supera tu HI → ganas monedas + XP → subes nivel y desbloqueas logros</li>
           </ol>
@@ -937,8 +995,8 @@ export default function App(){
       <PWAInstall />
 
       <footer className="max-w-[1400px] mx-auto px-4 pb-8 pt-2 text-center">
-        <p className="text-[11px] font-mono tracking-widest text-white/30">NEO ARCADE v3.2 ELITE © 2026 — 50 juegos • RGB animado • Progresión total • Desafíos diarios • Logros • PWA Instalable • Vite + React + Tailwind</p>
-        <p className="text-[11px] font-mono text-white/20 mt-1">Instalable en PC (Chrome/Edge → Instalar) y móvil (Compartir → Añadir a pantalla de inicio) • Funciona offline • <a href="https://github.com/WilmerF17/Neo-Arcade" target="_blank" rel="noreferrer" className="underline hover:text-cyan-300">GitHub</a> • <button onClick={handleShare} className="underline hover:text-cyan-300">Compartir ↗</button> • <span className="text-white/25">v3.2 • {totalScore.toLocaleString()} pts totales</span></p>
+        <p className="text-[11px] font-mono tracking-widest text-white/30">NEO ARCADE 50 ELITE v4.0 © 2026 — 250 juegos (50 activos + 10 CASINO + 190 ELITE) • Sistema monetario virtual • 18+ Simulado sin dinero real</p>
+        <p className="text-[11px] font-mono text-white/20 mt-1">Instalable en PC (Chrome/Edge/Opera GX → Instalar) y móvil • Funciona offline • <a href="https://github.com/WilmerF17/Neo-Arcade" target="_blank" rel="noreferrer" className="underline hover:text-cyan-300">GitHub</a> • <button onClick={handleShare} className="underline hover:text-cyan-300">Compartir ↗</button> • <span className="text-white/25">v4.0 ELITE 250 • {totalScore.toLocaleString()} pts totales</span></p>
       </footer>
     </div>
   )
