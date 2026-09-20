@@ -129,11 +129,19 @@ export default function PWAInstall(){
               </div>
             )}
 
-            <div className="mt-6 flex gap-2">
+            <div className="mt-4 glass rounded-xl p-3 flex gap-3 items-center border border-white/10">
+              <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=https://wilmerf17.github.io/Neo-Arcade/" alt="QR Neo Elite 250" className="w-20 h-20 rounded-lg bg-white p-1" loading="lazy"/>
+              <div className="flex-1">
+                <p className="font-black text-white text-xs" style={{fontFamily:'Orbitron'}}>ESCANÉA PARA INSTALAR</p>
+                <p className="text-[11px] font-mono text-white/60 mt-1">Abre la cámara en móvil y apunta. Te lleva directo a Neo Elite 250.</p>
+                <p className="text-[10px] font-mono text-cyan-300 mt-1">https://wilmerf17.github.io/Neo-Arcade/</p>
+              </div>
+            </div>
+            <div className="mt-4 flex gap-2">
               <button onClick={()=>setShowModal(false)} className="flex-1 px-4 py-2.5 rounded-full bg-white text-black font-black text-xs tracking-widest">ENTENDIDO</button>
               {deferred && <button onClick={handleDownload} className="flex-1 px-4 py-2.5 rounded-full bg-gradient-to-r from-cyan-400 to-fuchsia-500 text-black font-black text-xs tracking-widest">INSTALAR AHORA</button>}
             </div>
-            <p className="text-[11px] font-mono text-white/30 text-center mt-3">PWA 100% segura • Sin permisos raros • 39 archivos precacheados • Funciona offline</p>
+            <p className="text-[11px] font-mono text-white/30 text-center mt-3">PWA 100% segura • Sin permisos raros • 41 archivos precacheados • Funciona offline • Auto-update</p>
           </div>
         </div>
       )}

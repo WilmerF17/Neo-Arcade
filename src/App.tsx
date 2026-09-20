@@ -716,6 +716,42 @@ export default function App(){
         </div>
       </header>
 
+      {/* HERO — Contenido + Apariencia ELITE */}
+      <section className="max-w-[1400px] mx-auto px-3 sm:px-4 mt-6">
+        <div className="glass rounded-[24px] p-[1.5px] shine-sweep" style={{background:'linear-gradient(135deg, #00ffff40, #ff00ff40, #ffdd0040)'}}>
+          <div className="rounded-[22px] bg-[#0a0a18]/80 backdrop-blur-xl p-6 sm:p-8 flex flex-col lg:flex-row gap-6 items-center">
+            <div className="flex-1">
+              <p className="text-[11px] tracking-[0.3em] font-mono text-cyan-300">NEO ELITE 250 • SALA INMERSIVA 2026 • BRILLA</p>
+              <h2 className="mt-2 font-black text-white text-2xl sm:text-3xl leading-tight" style={{fontFamily:'Orbitron'}}>250 CABINAS. <span className="rgb-text">1 SALA.</span> INFINITAS PARTIDAS.</h2>
+              <p className="text-sm text-white/70 mt-3 leading-relaxed">Juega 50 arcade clásicos + 10 CASINO virtual (18+ sin dinero real) + 190 ELITE únicos. Sistema monetario, XP, logros y desafíos diarios. Instalable en PC, Opera GX y móvil.</p>
+              <div className="mt-4 flex flex-wrap gap-2">
+                <a href="#arcade" onClick={()=>{ setActive('slots'); playClick() }} className="px-5 py-2.5 rounded-full bg-gradient-to-r from-cyan-400 to-fuchsia-500 text-black font-black text-xs tracking-widest hover:scale-105 transition">🎰 PROBAR CASINO</a>
+                <button onClick={()=>setShowAch(true)} className="px-5 py-2.5 rounded-full glass text-white font-bold text-xs border border-white/10 hover:bg-white/10">🏆 VER LOGROS</button>
+                <span className="inline-flex items-center gap-2 px-3 py-2 rounded-full glass text-xs font-mono text-white/60"><span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"/>250 ELITE • 60fps</span>
+              </div>
+              <div className="mt-4 grid grid-cols-3 gap-3 text-center">
+                <div className="glass rounded-xl p-3"><p className="font-black text-white" style={{fontFamily:'Orbitron'}}>{totalScore.toLocaleString()}</p><p className="text-[11px] font-mono text-white/50">PTS TOTALES</p></div>
+                <div className="glass rounded-xl p-3"><p className="font-black text-white" style={{fontFamily:'Orbitron'}}>{gamesPlayedDistinct}/250</p><p className="text-[11px] font-mono text-white/50">CABINAS</p></div>
+                <div className="glass rounded-xl p-3"><p className="font-black text-white" style={{fontFamily:'Orbitron'}}>{Object.values(achUnlocked).filter(Boolean).length}</p><p className="text-[11px] font-mono text-white/50">LOGROS</p></div>
+              </div>
+            </div>
+            <div className="w-full lg:w-[380px] glass rounded-2xl p-4 border border-white/10">
+              <p className="text-[11px] tracking-widest font-mono text-cyan-300">DESTACADOS HOY</p>
+              <div className="mt-3 space-y-2">
+                {(['slots','blackjack','snake','neon'] as any).slice(0,3).map((id:any)=>{ const g=GAMES[id]||GAMES['slots']; return (
+                  <div key={id} className="flex gap-3 items-center glass rounded-xl p-2.5 border border-white/5">
+                    <div className="w-9 h-9 rounded-lg flex items-center justify-center" style={{background:`${g.color}14`, border:`1px solid ${g.color}30`}}><GameIcon id={g.title.includes('SLOTS')?'slots': id==='slots'?'slots':'snake'} color={g.color} size={18}/></div>
+                    <div className="flex-1"><p className="font-bold text-white text-xs" style={{fontFamily:'Orbitron'}}>{g.title}</p><p className="text-[11px] font-mono text-white/50">{g.cat} • {g.mech}</p></div>
+                    <span className="text-[11px] font-mono px-2 py-1 rounded-full bg-white/10 text-white/60">{g.diff===1?'FÁCIL':'ELITE'}</span>
+                  </div>
+                )})}
+                <button onClick={()=>setFilter('CASINO')} className="w-full mt-2 py-2 rounded-full bg-gradient-to-r from-amber-400 to-orange-500 text-black font-black text-xs">EXPLORAR 10 CASINO →</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {showStats && (
         <div className="max-w-[1400px] mx-auto px-3 sm:px-4 mt-3 grid grid-cols-2 lg:grid-cols-4 gap-3">
           <div className="glass rounded-2xl p-4"><p className="text-[11px] font-mono tracking-widest text-cyan-300">PARTIDAS</p><p className="font-black text-2xl text-white" style={{fontFamily:'Orbitron'}}>{totalPlays}</p><p className="text-xs font-mono text-white/50">{gamesPlayedDistinct} juegos tocados</p></div>
@@ -1014,9 +1050,17 @@ export default function App(){
         </div>
       )}
 
+      {/* Interfaz móvil: nav inferior para uso de espacios */}
+      <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-40 glass border-t border-white/10 px-2 py-2 flex justify-around items-center pb-[env(safe-area-inset-bottom)]">
+        <button onClick={()=>{ setFilter('ALL'); window.scrollTo({top:0, behavior:'smooth'}) }} className={`flex flex-col items-center gap-1 px-3 py-1 rounded-xl ${filter==='ALL'?'bg-white text-black':'text-white/60'}`}><span className="text-sm">🎮</span><span className="text-[10px] font-mono">JUGAR</span></button>
+        <button onClick={()=>{ setFilter('CASINO'); window.scrollTo({top:0, behavior:'smooth'}) }} className={`flex flex-col items-center gap-1 px-3 py-1 rounded-xl ${filter==='CASINO'?'bg-amber-400 text-black':'text-white/60'}`}><span className="text-sm">🎰</span><span className="text-[10px] font-mono">CASINO</span></button>
+        <button onClick={()=>{ const el=document.querySelector('input[placeholder=\"Buscar cabina...\"]') as HTMLElement; el?.focus(); window.scrollTo({top:0, behavior:'smooth'}) }} className="flex flex-col items-center gap-1 px-3 py-1 rounded-xl text-white/60"><span className="text-sm">🔍</span><span className="text-[10px] font-mono">BUSCAR</span></button>
+        <button onClick={()=>setShowDaily(true)} className="flex flex-col items-center gap-1 px-3 py-1 rounded-xl text-white/60"><span className="text-sm">🎯</span><span className="text-[10px] font-mono">DIARIO</span></button>
+      </nav>
+
       <PWAInstall />
 
-      <footer className="max-w-[1400px] mx-auto px-4 pb-8 pt-2 text-center">
+      <footer className="max-w-[1400px] mx-auto px-4 pb-20 lg:pb-8 pt-2 text-center">
         <p className="text-[11px] font-mono tracking-widest text-white/30">Neo Elite 250 v5.0 © 2026 — 250 juegos • Casino virtual • Monetario 18+ sin dinero real • BRILLA</p>
         <p className="text-[11px] font-mono text-white/20 mt-1">Instalable en PC (Chrome/Edge/Opera GX → Instalar) y móvil • Funciona offline • <a href="https://github.com/WilmerF17/Neo-Arcade" target="_blank" rel="noreferrer" className="underline hover:text-cyan-300">GitHub</a> • <button onClick={handleShare} className="underline hover:text-cyan-300">Compartir ↗</button> • <span className="text-white/25">v5.0 Neo Elite 250 • {totalScore.toLocaleString()} pts totales</span></p>
       </footer>
