@@ -1170,12 +1170,13 @@ export default function App(){
         </div>
       )}
 
-      {/* Interfaz móvil: nav inferior para uso de espacios */}
-      <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-40 glass border-t border-white/10 px-2 py-2 flex justify-around items-center pb-[env(safe-area-inset-bottom)]">
-        <button onClick={()=>{ setFilter('ALL'); window.scrollTo({top:0, behavior:'smooth'}) }} className={`flex flex-col items-center gap-1 px-3 py-1 rounded-xl ${filter==='ALL'?'bg-white text-black':'text-white/60'}`}><span className="text-sm">🎮</span><span className="text-[10px] font-mono">JUGAR</span></button>
-        <button onClick={()=>{ setFilter('CASINO'); window.scrollTo({top:0, behavior:'smooth'}) }} className={`flex flex-col items-center gap-1 px-3 py-1 rounded-xl ${filter==='CASINO'?'bg-amber-400 text-black':'text-white/60'}`}><span className="text-sm">🎰</span><span className="text-[10px] font-mono">CASINO</span></button>
-        <button onClick={()=>{ const el=document.querySelector('input[placeholder=\"Buscar cabina...\"]') as HTMLElement; el?.focus(); window.scrollTo({top:0, behavior:'smooth'}) }} className="flex flex-col items-center gap-1 px-3 py-1 rounded-xl text-white/60"><span className="text-sm">🔍</span><span className="text-[10px] font-mono">BUSCAR</span></button>
-        <button onClick={()=>setShowDaily(true)} className="flex flex-col items-center gap-1 px-3 py-1 rounded-xl text-white/60"><span className="text-sm">🎯</span><span className="text-[10px] font-mono">DIARIO</span></button>
+      {/* Interfaz móvil ELITE — nav inferior espacioso y cómodo */}
+      <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-40 glass border-t border-white/10 px-2 py-2.5 flex justify-around items-center pb-[calc(0.5rem+env(safe-area-inset-bottom))] gap-1">
+        <button onClick={()=>{ setFilter('ALL'); window.scrollTo({top:0, behavior:'smooth'}) }} className={`flex flex-col items-center gap-1 px-3 py-1.5 rounded-2xl transition ${filter==='ALL'?'bg-white text-black shadow-[0_0_12px_rgba(255,255,255,0.3)]':'text-white/60 hover:bg-white/10'}`}><span className="text-[16px]">🎮</span><span className="text-[10px] font-mono tracking-widest">JUGAR</span></button>
+        <button onClick={()=>{ setFilter('CASINO'); window.scrollTo({top:0, behavior:'smooth'}) }} className={`flex flex-col items-center gap-1 px-3 py-1.5 rounded-2xl transition ${filter==='CASINO'?'bg-gradient-to-r from-amber-400 to-orange-500 text-black shadow-[0_0_12px_rgba(255,170,0,0.4)]':'text-white/60 hover:bg-white/10'}`}><span className="text-[16px]">🎰</span><span className="text-[10px] font-mono tracking-widest">CASINO</span></button>
+        <button onClick={()=>setShowShop(true)} className="flex flex-col items-center gap-1 px-3 py-1.5 rounded-2xl text-white/60 hover:bg-white/10 transition"><span className="text-[16px]">🛒</span><span className="text-[10px] font-mono tracking-widest">TIENDA</span></button>
+        <button onClick={()=>{ const el=document.querySelector('input[placeholder=\"Buscar cabina...\"]') as HTMLElement; el?.focus(); window.scrollTo({top:0, behavior:'smooth'}) }} className="flex flex-col items-center gap-1 px-3 py-1.5 rounded-2xl text-white/60 hover:bg-white/10 transition"><span className="text-[16px]">🔍</span><span className="text-[10px] font-mono tracking-widest">BUSCAR</span></button>
+        <button onClick={()=>setShowDaily(true)} className="flex flex-col items-center gap-1 px-3 py-1.5 rounded-2xl text-white/60 hover:bg-white/10 transition"><span className="text-[16px]">🎯</span><span className="text-[10px] font-mono tracking-widest">DIARIO</span></button>
       </nav>
 
       <PWAInstall />

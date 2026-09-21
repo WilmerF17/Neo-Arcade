@@ -46,15 +46,7 @@ export default function PWAInstall(){
         </div>
       )}
 
-      {/* Botón DESCARGAR universal siempre visible (PC y móvil, todos los navegadores) */}
-      <button
-        onClick={handleDownload}
-        aria-label="Descargar aplicación NEO ARCADE"
-        className="fixed bottom-4 right-4 z-[69] md:bottom-6 md:right-6 px-4 py-3 rounded-full bg-gradient-to-r from-cyan-400 to-fuchsia-500 text-black font-black text-xs tracking-widest shadow-[0_0_24px_rgba(0,255,255,0.5)] hover:scale-105 transition flex items-center gap-2 border border-white/20"
-        title="Descargar app en PC y móvil"
-      >
-        <span className="text-base">⬇️</span> DESCARGAR APP
-      </button>
+
 
       {/* Modal instrucciones por navegador */}
       {showModal && (
