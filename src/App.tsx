@@ -296,6 +296,7 @@ export default function App(){
   const [showAch, setShowAch] = useState(false)
   const [showShop, setShowShop] = useState(false)
   const [showStats, setShowStats] = useState(false)
+  const [showMobileMenu, setShowMobileMenu] = useState(false)
   const [combo, setCombo] = useState(0)
   const [coinPop, setCoinPop] = useState(false)
   const [shopHistory, setShopHistory] = useState<{id:number, item:string, price:number, date:string}[]>(()=>{
@@ -766,7 +767,7 @@ export default function App(){
           </div>
 
           <div className="flex flex-wrap items-center gap-2">
-            <div className="glass rounded-full px-3 py-1.5 flex items-center gap-3 min-w-[210px]">
+            <div className="glass rounded-full px-3 py-1.5 flex items-center gap-3 min-w-[180px] sm:min-w-[210px]">
               <div className="w-8 h-8 rounded-full bg-gradient-to-br from-cyan-400 to-fuchsia-500 flex items-center justify-center font-black text-black text-xs" style={{fontFamily:'Orbitron'}}>{level}</div>
               <div className="flex-1">
                 <div className="flex justify-between text-[10px] font-mono tracking-widest"><span className="text-white/60">NIVEL {level}</span><span className="text-cyan-300">{xp}/{xpToNext} XP</span></div>
@@ -775,24 +776,38 @@ export default function App(){
             </div>
             <div className={`glass rounded-full px-3 py-1.5 flex items-center gap-2 ${coinPop?'coin-pop':''}`}>
               <span className="text-amber-300">💰</span><span className="font-black text-white text-sm" style={{fontFamily:'Orbitron'}}>{coins.toLocaleString()}</span>
-              <span className="w-px h-4 bg-white/10 mx-1"/>
-              <span className="text-orange-400">🔥</span><span className="font-bold text-white text-sm">{streak}</span>
-              <span className="text-[11px] font-mono text-white/50">días</span>
-              {combo>=2 && <><span className="w-px h-4 bg-white/10 mx-1"/><span className="text-cyan-300 font-black text-sm animate-pulse" style={{fontFamily:'Orbitron'}}>x{combo}</span><span className="text-[11px] font-mono text-cyan-300">COMBO</span></>}
+              <span className="hidden sm:inline w-px h-4 bg-white/10 mx-1"/>
+              <span className="hidden sm:inline-flex items-center gap-1"><span className="text-orange-400">🔥</span><span className="font-bold text-white text-sm">{streak}</span><span className="text-[11px] font-mono text-white/50">días</span></span>
+              {combo>=2 && <><span className="w-px h-4 bg-white/10 mx-1"/><span className="text-cyan-300 font-black text-sm animate-pulse" style={{fontFamily:'Orbitron'}}>x{combo}</span><span className="text-[11px] font-mono text-cyan-300 hidden sm:inline">COMBO</span></>}
             </div>
-            <div className="hidden sm:flex glass rounded-full px-2 py-1 items-center gap-1.5">
+            <div className="hidden lg:flex glass rounded-full px-2 py-1 items-center gap-1.5">
               <span className="text-[11px] font-mono tracking-widest text-white/60">TOTAL</span>
               <span className="font-black text-cyan-300 text-sm" style={{fontFamily:'Orbitron'}}>{totalScore.toLocaleString()}</span>
               <span className="text-[11px] font-mono text-white/45">• {gamesPlayedDistinct}/250</span>
             </div>
+            <div className="hidden lg:flex items-center gap-2">
               <button onClick={()=>{setShowDaily(true); playClick()}} aria-label="Ver desafíos diarios" className="relative px-3 py-1.5 rounded-full bg-gradient-to-r from-amber-400 to-orange-500 text-black font-black text-xs tracking-widest">🎯 DIARIO {dailyList.filter(d=> dailyDone[d.id]).length}/3</button>
-            <button onClick={()=>{setShowAch(true); playClick()}} aria-label="Ver logros" className="px-3 py-1.5 rounded-full glass font-mono text-xs tracking-widest text-white/80 hover:bg-white/10">🏆 LOGROS {Object.values(achUnlocked).filter(Boolean).length}/{ACHIEVEMENTS.length}</button>
-            <button onClick={()=>{setShowShop(true); playClick()}} aria-label="Tienda" className="px-3 py-1.5 rounded-full bg-gradient-to-r from-fuchsia-500 to-purple-500 text-white font-black text-xs tracking-widest">🛒 TIENDA</button>
-            <span className={`hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-mono tracking-widest border ${syncStatus==='ok'?'bg-emerald-500/15 border-emerald-400/30 text-emerald-300': syncStatus==='syncing'?'bg-amber-500/15 border-amber-400/30 text-amber-300 animate-pulse': syncStatus==='error'?'bg-red-500/10 border-red-400/20 text-red-300':'glass border-white/10 text-white/45'}`} title={syncStatus==='ok'?'Sincronizado con terminal': syncStatus==='syncing'?'Sincronizando...': 'Sin conexión terminal'}>● {syncStatus==='ok'?'SYNC': syncStatus==='syncing'?'SYNC...': syncStatus==='error'?'OFFLINE':'SYNC'}</span>
-            <button onClick={()=>setRgbMode(!rgbMode)} aria-label="Alternar modo RGB" className={`w-8 h-8 rounded-full flex items-center justify-center hover:bg-white/10 text-sm border ${rgbMode?'bg-gradient-to-br from-cyan-400 to-fuchsia-500 text-black border-white/20 neon-pulse':'glass text-white/80 border-white/10'}`} title="RGB Mode">🌈</button>
-            <button onClick={handleShare} aria-label="Compartir puntuación NEO ARCADE" className="w-8 h-8 rounded-full glass flex items-center justify-center hover:bg-white/10 text-white/80 text-xs border border-white/10" title="Compartir puntuación">↗</button>
-            <button onClick={()=>setMuted(!muted)} aria-label={muted?'Activar sonido':'Silenciar'} className="w-8 h-8 rounded-full glass flex items-center justify-center hover:bg-white/10 text-white/80 text-sm">{muted?'🔇':'🔊'}</button>
+              <button onClick={()=>{setShowAch(true); playClick()}} aria-label="Ver logros" className="px-3 py-1.5 rounded-full glass font-mono text-xs tracking-widest text-white/80 hover:bg-white/10">🏆 LOGROS {Object.values(achUnlocked).filter(Boolean).length}/{ACHIEVEMENTS.length}</button>
+              <button onClick={()=>{setShowShop(true); playClick()}} aria-label="Tienda" className="px-3 py-1.5 rounded-full bg-gradient-to-r from-fuchsia-500 to-purple-500 text-white font-black text-xs tracking-widest">🛒 TIENDA</button>
+            </div>
+            <div className="hidden lg:flex items-center gap-1.5">
+              <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-mono tracking-widest border ${syncStatus==='ok'?'bg-emerald-500/15 border-emerald-400/30 text-emerald-300': syncStatus==='syncing'?'bg-amber-500/15 border-amber-400/30 text-amber-300 animate-pulse': syncStatus==='error'?'bg-red-500/10 border-red-400/20 text-red-300':'glass border-white/10 text-white/45'}`} title={syncStatus==='ok'?'Sincronizado con terminal': syncStatus==='syncing'?'Sincronizando...': 'Sin conexión terminal'}>● {syncStatus==='ok'?'SYNC': syncStatus==='syncing'?'SYNC...': syncStatus==='error'?'OFFLINE':'SYNC'}</span>
+              <button onClick={()=>setRgbMode(!rgbMode)} aria-label="Alternar modo RGB" className={`w-8 h-8 rounded-full flex items-center justify-center hover:bg-white/10 text-sm border ${rgbMode?'bg-gradient-to-br from-cyan-400 to-fuchsia-500 text-black border-white/20 neon-pulse':'glass text-white/80 border-white/10'}`} title="RGB Mode">🌈</button>
+              <button onClick={handleShare} aria-label="Compartir puntuación NEO ARCADE" className="w-8 h-8 rounded-full glass flex items-center justify-center hover:bg-white/10 text-white/80 text-xs border border-white/10" title="Compartir puntuación">↗</button>
+              <button onClick={()=>setMuted(!muted)} aria-label={muted?'Activar sonido':'Silenciar'} className="w-8 h-8 rounded-full glass flex items-center justify-center hover:bg-white/10 text-white/80 text-sm">{muted?'🔇':'🔊'}</button>
+            </div>
+            <button onClick={()=>setShowMobileMenu(!showMobileMenu)} aria-label="Menú" className="lg:hidden w-9 h-9 rounded-full glass flex items-center justify-center text-white border border-white/10">☰</button>
           </div>
+          {showMobileMenu && (
+            <div className="lg:hidden glass rounded-2xl p-3 mt-2 flex flex-wrap gap-2 border border-white/10">
+              <button onClick={()=>{setShowDaily(true); setShowMobileMenu(false)}} className="px-3 py-1.5 rounded-full bg-gradient-to-r from-amber-400 to-orange-500 text-black font-black text-xs">🎯 DIARIO</button>
+              <button onClick={()=>{setShowAch(true); setShowMobileMenu(false)}} className="px-3 py-1.5 rounded-full glass text-white text-xs">🏆 LOGROS</button>
+              <button onClick={()=>{setShowShop(true); setShowMobileMenu(false)}} className="px-3 py-1.5 rounded-full bg-gradient-to-r from-fuchsia-500 to-purple-500 text-white font-black text-xs">🛒 TIENDA</button>
+              <button onClick={()=>{setRgbMode(!rgbMode); setShowMobileMenu(false)}} className="px-3 py-1.5 rounded-full glass text-white text-xs">🌈 RGB</button>
+              <button onClick={()=>{handleShare(); setShowMobileMenu(false)}} className="px-3 py-1.5 rounded-full glass text-white text-xs">↗ Compartir</button>
+              <button onClick={()=>{setMuted(!muted); setShowMobileMenu(false)}} className="px-3 py-1.5 rounded-full glass text-white text-xs">{muted?'🔇':'🔊'} Sonido</button>
+            </div>
+          )}
         </div>
 
         <div className="max-w-[1400px] mx-auto px-3 sm:px-4 pb-3 flex flex-col sm:flex-row gap-2 items-stretch sm:items-center justify-between border-t border-white/5 pt-3 mt-1">
