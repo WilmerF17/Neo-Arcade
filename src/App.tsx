@@ -677,27 +677,44 @@ export default function App(){
       </div>
 
       {!globalReady && (
-        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/80 backdrop-blur-xl">
-          <div className="absolute inset-0 opacity-30" style={{background:`radial-gradient(600px 400px at 50% 30%, rgba(0,255,255,0.22), transparent 70%), radial-gradient(500px 500px at 80% 80%, rgba(255,0,255,0.18), transparent 70%)`}}/>
-          <div className="relative glass rounded-[28px] border border-cyan-400/30 max-w-[560px] w-full p-8 sm:p-10 text-center shadow-[0_0_50px_rgba(0,255,255,0.25)]">
-            <img src="/icon.png" alt="NEO ARCADE" className="w-16 h-16 mx-auto rounded-2xl object-cover shadow-[0_0_24px_rgba(0,255,255,0.6)] border border-white/10 animate-float" onError={(e)=>{ (e.currentTarget as HTMLImageElement).style.display='none'}} />
-            <h2 className="mt-5 font-black text-white text-2xl sm:text-3xl tracking-widest" style={{fontFamily:'Orbitron'}}>NEO ELITE 250</h2>
-            <p className="text-[11px] tracking-[0.38em] font-mono text-cyan-300 mt-1">SALÓN INMERSIVO • 250 CABINAS • RGB • 2026</p>
-            <div className="mt-6 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/10">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_#00ff88]"/>
-              <span className="text-xs font-mono tracking-widest text-white/70">250 JUEGOS • RGB • PROGRESO • LOGROS • DIARIO • CASINO</span>
+        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/85 backdrop-blur-xl">
+          <div className="absolute inset-0 opacity-40" style={{background:`radial-gradient(700px 500px at 50% 20%, rgba(0,255,255,0.18), transparent 70%), radial-gradient(600px 600px at 85% 85%, rgba(255,0,255,0.16), transparent 70%), radial-gradient(500px 400px at 15% 85%, rgba(255,221,0,0.08), transparent 70%)`}}/>
+          <div className="absolute inset-0 grid-bg opacity-20"/>
+          <div className="relative w-full max-w-[580px]">
+            <div className="absolute -inset-[1.5px] rounded-[32px] opacity-60 blur-[1px]" style={{background:'linear-gradient(135deg, #00ffff, #ff00ff, #ffdd00, #00ffff)', backgroundSize:'300% 300%', animation:'shimmer 3s linear infinite'}}/>
+            <div className="relative glass rounded-[30px] border border-white/10 p-8 sm:p-10 text-center shadow-[0_0_60px_rgba(0,255,255,0.25),0_0_100px_rgba(255,0,255,0.15)] overflow-hidden shine-sweep">
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-[1px] bg-gradient-to-r from-transparent via-cyan-400/50 to-transparent"/>
+              <div className="relative">
+                <div className="w-20 h-20 mx-auto rounded-2xl flex items-center justify-center relative">
+                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-cyan-400 to-fuchsia-500 blur-xl opacity-40 animate-pulse"/>
+                  <img src="/icon.png" alt="NEO ELITE 250" className="relative w-20 h-20 rounded-2xl object-cover shadow-[0_0_32px_rgba(0,255,255,0.7)] border-2 border-white/20 animate-float brillo" onError={(e)=>{ (e.currentTarget as HTMLImageElement).style.display='none'; const n=(e.currentTarget as HTMLImageElement).nextElementSibling as HTMLElement; if(n) (n as HTMLElement).style.display='flex'}} />
+                  <div className="hidden w-20 h-20 rounded-2xl bg-gradient-to-br from-cyan-400 via-fuchsia-500 to-amber-400 items-center justify-center font-black text-black text-2xl shadow-[0_0_32px_rgba(0,255,255,0.7)] border-2 border-white/20" style={{fontFamily:'Orbitron'}}>N</div>
+                </div>
+                <div className="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-emerald-400 border-2 border-black flex items-center justify-center shadow-[0_0_12px_#00ff88] animate-pulse"><span className="w-2 h-2 bg-white rounded-full animate-ping absolute"/><span className="w-2 h-2 bg-white rounded-full relative"/></div>
+              </div>
+              <h2 className="mt-6 font-black text-white text-[28px] sm:text-[34px] tracking-[0.12em] leading-none" style={{fontFamily:'Orbitron', textShadow:'0 0 20px rgba(0,255,255,0.5), 0 0 40px rgba(255,0,255,0.3)'}}>NEO ELITE <span className="rgb-text">250</span></h2>
+              <p className="text-[11px] tracking-[0.38em] font-mono text-cyan-300 mt-2">SALÓN INMERSIVO • 250 CABINAS • RGB • 2026 • BRILLA</p>
+              <div className="mt-5 inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-gradient-to-r from-white/10 to-white/5 border border-white/15 backdrop-blur-md shadow-[inset_0_0_12px_rgba(255,255,255,0.06)]">
+                <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_10px_#00ff88] border border-white/30"/>
+                <span className="text-xs font-mono tracking-[0.18em] text-white/80 font-bold">250 JUEGOS • RGB • PROGRESO • LOGROS • DIARIO • CASINO</span>
+              </div>
+              <div className="mt-8 relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/20 via-fuchsia-500/20 to-amber-400/20 blur-xl rounded-full"/>
+                <p className="relative font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-white to-fuchsia-300 tracking-[0.18em] text-sm animate-pulse" style={{fontFamily:'Orbitron'}}>— PRESIONA ENTER PARA JUGAR —</p>
+                <p className="text-xs font-mono text-white/50 mt-2 tracking-widest">o haz click en JUGAR • 60fps • Offline • PWA</p>
+                <button onClick={()=>{ setGlobalReady(true); playClick() }} className="relative mt-5 px-10 py-4 rounded-full bg-gradient-to-r from-cyan-400 via-fuchsia-500 to-amber-400 text-black font-black tracking-[0.12em] hover:scale-[1.03] active:scale-[0.98] transition-all shadow-[0_0_30px_rgba(0,255,255,0.5),0_0_60px_rgba(255,0,255,0.25)] shine-sweep brillo" style={{fontFamily:'Orbitron', fontSize:'15px'}}>ENTRAR AL ARCADE [ENTER]</button>
+              </div>
+              <div className="mt-7 grid grid-cols-3 gap-2.5 text-[11px] font-mono">
+                <span className="glass rounded-full py-2.5 text-white/70 border border-white/10 hover:border-cyan-400/30 transition flex items-center justify-center gap-1.5"><span>🎮</span> WASD / Flechas</span>
+                <span className="glass rounded-full py-2.5 text-white font-bold bg-white/10 border border-cyan-400/30 shadow-[0_0_12px_rgba(0,255,255,0.2)] flex items-center justify-center gap-1.5"><span>⏎</span> ENTER Jugar</span>
+                <span className="glass rounded-full py-2.5 text-white/60 border border-white/10 flex items-center justify-center gap-1.5"><span>⎋</span> ESC Pausa</span>
+              </div>
+              <div className="mt-4 flex items-center justify-center gap-2 text-[11px] font-mono text-white/25">
+                <span className="w-1 h-1 bg-white/20 rounded-full"/>
+                <span>Consejo: usa audífonos para audio neón • R reinicia • P pausa • Combo x3</span>
+                <span className="w-1 h-1 bg-white/20 rounded-full"/>
+              </div>
             </div>
-            <div className="mt-8">
-              <p className="font-black text-cyan-300 tracking-widest text-sm animate-pulse" style={{fontFamily:'Orbitron'}}>— PRESIONA ENTER PARA JUGAR —</p>
-              <p className="text-xs font-mono text-white/50 mt-2">o haz click en JUGAR</p>
-              <button onClick={()=>{ setGlobalReady(true); playClick() }} className="mt-5 px-8 py-3 rounded-full bg-gradient-to-r from-cyan-400 to-fuchsia-500 text-black font-black tracking-widest hover:scale-105 transition shadow-[0_0_20px_rgba(0,255,255,0.4)]" style={{fontFamily:'Orbitron'}}>ENTRAR AL ARCADE [ENTER]</button>
-            </div>
-            <div className="mt-6 grid grid-cols-3 gap-2 text-[11px] font-mono">
-              <span className="glass rounded-full py-1.5 text-white/60">WASD / Flechas</span>
-              <span className="glass rounded-full py-1.5 text-white/60">ENTER Jugar</span>
-              <span className="glass rounded-full py-1.5 text-white/60">ESC Pausa</span>
-            </div>
-            <p className="text-[11px] font-mono text-white/30 mt-4">Consejo: usa audífonos para audio neón • R reinicia • P pausa</p>
           </div>
         </div>
       )}
