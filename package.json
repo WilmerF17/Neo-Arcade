@@ -20,7 +20,6 @@
     "stats:watch": "node scripts/terminal-dashboard.js"
   },
   "dependencies": {
-    "@tailwindcss/postcss": "^4.3.3",
     "react": "^19.3.0",
     "react-dom": "^19.3.0"
   },
@@ -31,7 +30,7 @@
     "autoprefixer": "^10.4.20",
     "png-to-ico": "^3.0.2",
     "postcss": "^8.4.49",
-    "tailwindcss": "^4.3.3",
+    "tailwindcss": "^3.4.15",
     "typescript": "^7.0.2",
     "vite": "^8.3.0",
     "vite-plugin-pwa": "^1.3.0"
