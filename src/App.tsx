@@ -342,6 +342,25 @@ export default function App(){
     try{ const raw=localStorage.getItem('neo_daily_done'); if(raw){ const o=JSON.parse(raw); if(o.date===todayStr) return o.done } }catch{} return {}
   })
   const [hasSpun, setHasSpun] = useState(()=> localStorage.getItem('neo_wheel_date')===todayStr)
+  // URLs por juego: #slots o ?game=slots + ?cat=CASINO
+  useEffect(()=>{
+    const hash = location.hash.replace('#','')
+    const params = new URLSearchParams(location.search)
+    const gameParam = params.get('game') || hash
+    if(gameParam && (gameParam as GameId) in GAMES) setActive(gameParam as GameId)
+    const catParam = params.get('cat')
+    if(catParam && ['ALL','ARCADE','BRAIN','PULSE','SKILL','CASINO'].includes(catParam)) setFilter(catParam as any)
+    const onHash = ()=>{ const h=location.hash.replace('#',''); if(h && (h as GameId) in GAMES) { setActive(h as GameId); document.getElementById('game-view')?.scrollIntoView({behavior:'smooth'}) } }
+    window.addEventListener('hashchange', onHash)
+    return()=> window.removeEventListener('hashchange', onHash)
+  },[])
+  useEffect(()=>{
+    const url = new URL(window.location.href)
+    url.searchParams.set('game', active)
+    url.searchParams.set('cat', filter)
+    url.hash = active
+    window.history.replaceState(null,'', url.toString())
+  },[active, filter])
 
   const dailyList = useMemo(()=> getDailyForDate(todayStr),[todayStr])
 
@@ -769,7 +788,7 @@ export default function App(){
         <div className="max-w-[1400px] mx-auto px-3 sm:px-4 pb-3 flex flex-col sm:flex-row gap-2 items-stretch sm:items-center justify-between border-t border-white/5 pt-3 mt-1">
           <div className="flex gap-1.5 flex-wrap">
             {(['ALL','ARCADE','BRAIN','PULSE','SKILL','CASINO'] as const).map(cat=>(
-              <button key={cat} onClick={()=>setFilter(cat as any)} className={`px-3 py-1.5 rounded-full text-[11px] font-mono tracking-widest border transition ${filter===cat?'bg-cyan-400 text-black border-cyan-400 font-black':'glass text-white/60 border-white/10 hover:bg-white/10'}`}>{cat}</button>
+              <button key={cat} onClick={()=>{ setFilter(cat as any); document.getElementById('arcade')?.scrollIntoView({behavior:'smooth', block:'start'}) }} className={`px-3 py-1.5 rounded-full text-[11px] font-mono tracking-widest border transition ${filter===cat?'bg-cyan-400 text-black border-cyan-400 font-black':'glass text-white/60 border-white/10 hover:bg-white/10'}`}>{cat}</button>
             ))}
           </div>
           <div className="flex gap-2 items-center">
