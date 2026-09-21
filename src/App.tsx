@@ -294,6 +294,7 @@ export default function App(){
   const [muted, setMuted] = useState(false)
   const [showDaily, setShowDaily] = useState(false)
   const [showAch, setShowAch] = useState(false)
+  const [showShop, setShowShop] = useState(false)
   const [showStats, setShowStats] = useState(false)
   const [toasts, setToasts] = useState<{id:number,text:string,sub:string}[]>([])
   const [globalReady, setGlobalReady] = useState(false)
@@ -695,6 +696,7 @@ export default function App(){
             </div>
               <button onClick={()=>{setShowDaily(true); playClick()}} aria-label="Ver desafíos diarios" className="relative px-3 py-1.5 rounded-full bg-gradient-to-r from-amber-400 to-orange-500 text-black font-black text-xs tracking-widest">🎯 DIARIO {dailyList.filter(d=> dailyDone[d.id]).length}/3</button>
             <button onClick={()=>{setShowAch(true); playClick()}} aria-label="Ver logros" className="px-3 py-1.5 rounded-full glass font-mono text-xs tracking-widest text-white/80 hover:bg-white/10">🏆 LOGROS {Object.values(achUnlocked).filter(Boolean).length}/{ACHIEVEMENTS.length}</button>
+            <button onClick={()=>{setShowShop(true); playClick()}} aria-label="Tienda" className="px-3 py-1.5 rounded-full bg-gradient-to-r from-fuchsia-500 to-purple-500 text-white font-black text-xs tracking-widest">🛒 TIENDA</button>
             <span className={`hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-mono tracking-widest border ${syncStatus==='ok'?'bg-emerald-500/15 border-emerald-400/30 text-emerald-300': syncStatus==='syncing'?'bg-amber-500/15 border-amber-400/30 text-amber-300 animate-pulse': syncStatus==='error'?'bg-red-500/10 border-red-400/20 text-red-300':'glass border-white/10 text-white/45'}`} title={syncStatus==='ok'?'Sincronizado con terminal': syncStatus==='syncing'?'Sincronizando...': 'Sin conexión terminal'}>● {syncStatus==='ok'?'SYNC': syncStatus==='syncing'?'SYNC...': syncStatus==='error'?'OFFLINE':'SYNC'}</span>
             <button onClick={()=>setRgbMode(!rgbMode)} aria-label="Alternar modo RGB" className={`w-8 h-8 rounded-full flex items-center justify-center hover:bg-white/10 text-sm border ${rgbMode?'bg-gradient-to-br from-cyan-400 to-fuchsia-500 text-black border-white/20 neon-pulse':'glass text-white/80 border-white/10'}`} title="RGB Mode">🌈</button>
             <button onClick={handleShare} aria-label="Compartir puntuación NEO ARCADE" className="w-8 h-8 rounded-full glass flex items-center justify-center hover:bg-white/10 text-white/80 text-xs border border-white/10" title="Compartir puntuación">↗</button>
@@ -1053,6 +1055,36 @@ export default function App(){
                 )
               })}
             </div>
+          </div>
+        </div>
+      )}
+      {showShop && (
+        <div className="fixed inset-0 z-40 flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-md" onClick={()=>setShowShop(false)}/>
+          <div className="relative glass rounded-[22px] border border-fuchsia-400/30 max-w-[640px] w-full p-6 shadow-[0_0_40px_rgba(244,0,255,0.15)]">
+            <div className="flex justify-between items-start">
+              <div>
+                <h3 className="font-black text-white text-lg" style={{fontFamily:'Orbitron'}}>🛒 TIENDA ELITE</h3>
+                <p className="text-xs font-mono tracking-widest text-fuchsia-300">Gasta tus {coins.toLocaleString()} 💰 — cosméticos y boosts</p>
+              </div>
+              <button onClick={()=>setShowShop(false)} className="w-8 h-8 rounded-full glass flex items-center justify-center text-white/70 hover:bg-white/10">✕</button>
+            </div>
+            <div className="mt-4 grid sm:grid-cols-3 gap-3">
+              {[
+                {icon:'⚡', title:'Boost XP x2', desc:'Doble XP 1h', price:500, action:()=>{ if(coins>=500){ setCoins(c=>c-500); addToast('¡Boost activo!','XP x2 por 1h'); setShowShop(false)} else addToast('Sin monedas','Juega para ganar') }},
+                {icon:'🎨', title:'Skin Dorada', desc:'Borde dorado BRILLA', price:1000, action:()=>{ if(coins>=1000){ setCoins(c=>c-1000); addToast('¡Skin Dorada!','BRILLA ✨'); setShowShop(false)} else addToast('Sin monedas','1000 necesarias') }},
+                {icon:'🎁', title:'Cofre Misterio', desc:'+200 a +1000 random', price:200, action:()=>{ if(coins>=200){ setCoins(c=>c-200); const win=200+Math.floor(Math.random()*800); setCoins(c=>c+win); addToast(`¡+${win} 💰!`,'Cofre abierto'); setShowShop(false)} else addToast('Sin monedas','200 necesarias') }},
+              ].map(it=>(
+                <div key={it.title} className="glass rounded-xl p-4 border border-white/10 text-center">
+                  <div className="text-2xl">{it.icon}</div>
+                  <p className="font-black text-white text-sm mt-1" style={{fontFamily:'Orbitron'}}>{it.title}</p>
+                  <p className="text-xs font-mono text-white/60 mt-1">{it.desc}</p>
+                  <p className="font-black text-amber-300 mt-2">{it.price} 💰</p>
+                  <button onClick={it.action} className="mt-2 w-full py-1.5 rounded-full bg-white text-black font-black text-xs">COMPRAR</button>
+                </div>
+              ))}
+            </div>
+            <p className="text-[11px] font-mono text-white/30 text-center mt-4">Monetario virtual 18+ — sin dinero real • Se guarda en localStorage</p>
           </div>
         </div>
       )}
