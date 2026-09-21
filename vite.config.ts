@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
 import fs from 'fs'
 import path from 'path'
+import { execSync } from 'child_process'
 
 const statsPath = path.resolve('arcade-stats.json')
 const publicStatsPath = path.resolve('public/arcade-stats.json')
@@ -31,6 +32,18 @@ function spa404Plugin(){
         fs.writeFileSync(path.resolve('dist/404.html'), html)
         console.log('[SPA] 404.html generado para GitHub Pages')
       }catch{}
+    }
+  }
+}
+function zipPlugin(){
+  return {
+    name: 'zip-app',
+    closeBundle(){
+      try{
+        execSync('powershell -Command "Compress-Archive -Path dist/* -DestinationPath dist/neo-elite-250.zip -Force"', { stdio: 'inherit' })
+        try{ execSync('powershell -Command "Copy-Item dist/neo-elite-250.zip public/neo-elite-250.zip -Force"', { stdio: 'inherit' }) }catch{}
+        console.log('[ZIP] neo-elite-250.zip generado')
+      }catch(e){ console.log('[ZIP] skip', String(e).slice(0,120)) }
     }
   }
 }
@@ -126,7 +139,7 @@ const base = isVercel ? '/' : '/Neo-Arcade/'
 
 export default defineConfig({
   base,
-  plugins: [react(), arcadeSyncPlugin(), spa404Plugin(), VitePWA({
+  plugins: [react(), arcadeSyncPlugin(), spa404Plugin(), zipPlugin(), VitePWA({
     registerType: 'autoUpdate',
     includeAssets: ['favicon.ico','favicon.png','icon-*.png','icon.png','icon-master-1024.png','apple-touch-icon.png'],
     manifest: {

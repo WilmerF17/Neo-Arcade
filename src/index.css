@@ -6,15 +6,21 @@
 ::-webkit-scrollbar { width: 8px; height: 8px; }
 ::-webkit-scrollbar-track { background: #0a0a0f; }
 ::-webkit-scrollbar-thumb { background: linear-gradient(#00ffff, #ff00ff); border-radius: 4px; }
+/* Comodidad: touch targets 44px mínimo */
+button, a, [role="button"] { min-height: 28px; }
+@media (pointer: coarse) {
+  button, a { min-height: 44px; min-width: 44px; }
+}
 
 html { scroll-behavior: smooth; }
 body {
-  background: #05050a;
+  background: radial-gradient(1200px 800px at 50% -10%, rgba(0,255,255,0.08), transparent 60%), radial-gradient(900px 600px at 90% 90%, rgba(255,0,255,0.06), transparent 70%), #05050a;
   color: #e0e7ff;
   font-family: 'Rajdhani', sans-serif;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  line-height: 1.5;
 }
 *:focus-visible { outline: 2px solid #00ffff; outline-offset: 2px; border-radius: 6px; }
 ::selection { background: #00ffff; color: #000; }

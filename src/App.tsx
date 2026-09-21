@@ -296,6 +296,7 @@ export default function App(){
   const [showAch, setShowAch] = useState(false)
   const [showShop, setShowShop] = useState(false)
   const [showStats, setShowStats] = useState(false)
+  const [combo, setCombo] = useState(0)
   const [toasts, setToasts] = useState<{id:number,text:string,sub:string}[]>([])
   const [globalReady, setGlobalReady] = useState(false)
   const [started, setStarted] = useState(false)
@@ -481,6 +482,21 @@ export default function App(){
   const handleScore = useCallback((s:number)=>{
     const game=active
     lastEvent.current = `${GAMES[game].title} ${s}pts`
+    // Sistema combo MUY BUENO
+    if(s>0){
+      setCombo(c=>{
+        const nc=c+1
+        if(nc>=3){
+          const bonus=nc*2
+          setCoins(co=>co+bonus)
+          addToast(`¡COMBO x${nc}!`, `+${bonus} bonus`)
+        }
+        return nc
+      })
+    } else {
+      if(combo>=3) addToast('Combo roto','¡Sigue racha!')
+      setCombo(0)
+    }
     setPlays(p=> ({...p, [game]:(p[game]||0)+1}))
     setHighScores(prev=>{
       const cur=prev[game]||0
@@ -584,7 +600,7 @@ export default function App(){
       return na
     })
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[active, highScores, plays, totalPlays, gamesPlayedDistinct, level, coins, streak, dailyList, dailyDone])
+  },[active, highScores, plays, totalPlays, gamesPlayedDistinct, level, coins, streak, dailyList, dailyDone, combo])
 
   const handleShare = useCallback(async ()=>{
     const url = 'https://wilmerf17.github.io/Neo-Arcade/'
@@ -596,6 +612,18 @@ export default function App(){
     }catch{}
     playClick()
   },[level, totalScore, gamesPlayedDistinct, active, playClick])
+  const handleFileDownload = ()=>{
+    const base = (import.meta as any).env.BASE_URL || '/'
+    const url = `${base}neo-elite-250.zip`
+    const a=document.createElement('a')
+    a.href=url
+    a.download='Neo-Elite-250.zip'
+    document.body.appendChild(a)
+    a.click()
+    a.remove()
+    addToast('Descargando Neo Elite 250.zip','656KB • Descomprime y abre index.html')
+    playClick()
+  }
 
   // Sistema monetario virtual 18+ — sin dinero real
   const handleBet = useCallback((amount:number)=>{
@@ -699,6 +727,7 @@ export default function App(){
               <span className="w-px h-4 bg-white/10 mx-1"/>
               <span className="text-orange-400">🔥</span><span className="font-bold text-white text-sm">{streak}</span>
               <span className="text-[11px] font-mono text-white/50">días</span>
+              {combo>=2 && <><span className="w-px h-4 bg-white/10 mx-1"/><span className="text-cyan-300 font-black text-sm animate-pulse" style={{fontFamily:'Orbitron'}}>x{combo}</span><span className="text-[11px] font-mono text-cyan-300">COMBO</span></>}
             </div>
             <div className="hidden sm:flex glass rounded-full px-2 py-1 items-center gap-1.5">
               <span className="text-[11px] font-mono tracking-widest text-white/60">TOTAL</span>
@@ -741,6 +770,7 @@ export default function App(){
               <p className="text-sm text-white/70 mt-3 leading-relaxed">Juega 50 arcade clásicos + 10 CASINO virtual (18+ sin dinero real) + 190 ELITE únicos. Sistema monetario, XP, logros y desafíos diarios. Instalable en PC, Opera GX y móvil.</p>
               <div className="mt-4 flex flex-wrap gap-2">
                 <a href="#arcade" onClick={()=>{ setActive('slots'); playClick() }} className="px-5 py-2.5 rounded-full bg-gradient-to-r from-cyan-400 to-fuchsia-500 text-black font-black text-xs tracking-widest hover:scale-105 transition">🎰 PROBAR CASINO</a>
+                <button onClick={handleFileDownload} className="px-5 py-2.5 rounded-full bg-white text-black font-black text-xs tracking-widest hover:scale-105 transition shine-sweep">⬇️ DESCARGAR</button>
                 <button onClick={()=>setShowAch(true)} className="px-5 py-2.5 rounded-full glass text-white font-bold text-xs border border-white/10 hover:bg-white/10">🏆 VER LOGROS</button>
                 <span className="inline-flex items-center gap-2 px-3 py-2 rounded-full glass text-xs font-mono text-white/60"><span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"/>250 ELITE • 60fps</span>
               </div>
