@@ -683,12 +683,11 @@ export default function App(){
       </div>
 
       {!globalReady && (
-        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/85 backdrop-blur-xl">
-          <div className="absolute inset-0 opacity-40" style={{background:`radial-gradient(700px 500px at 50% 20%, rgba(0,255,255,0.18), transparent 70%), radial-gradient(600px 600px at 85% 85%, rgba(255,0,255,0.16), transparent 70%), radial-gradient(500px 400px at 15% 85%, rgba(255,221,0,0.08), transparent 70%)`}}/>
-          <div className="absolute inset-0 grid-bg opacity-20"/>
+        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-[#040510]/95 backdrop-blur-2xl">
+          <div className="absolute inset-0 opacity-20" style={{background:`radial-gradient(700px 500px at 50% 20%, rgba(0,255,255,0.12), transparent 70%), radial-gradient(600px 600px at 85% 85%, rgba(255,0,255,0.10), transparent 70%)`}}/>
           <div className="relative w-full max-w-[580px]">
             <div className="absolute -inset-[1.5px] rounded-[32px] opacity-60 blur-[1px]" style={{background:'linear-gradient(135deg, #00ffff, #ff00ff, #ffdd00, #00ffff)', backgroundSize:'300% 300%', animation:'shimmer 3s linear infinite'}}/>
-            <div className="relative glass rounded-[30px] border border-white/10 p-8 sm:p-10 text-center shadow-[0_0_60px_rgba(0,255,255,0.25),0_0_100px_rgba(255,0,255,0.15)] overflow-hidden shine-sweep">
+            <div className="relative bg-[#0f0f1e]/95 backdrop-blur-xl rounded-[30px] border border-white/15 p-8 sm:p-10 text-center shadow-[0_0_60px_rgba(0,255,255,0.25),0_0_100px_rgba(255,0,255,0.15)] overflow-hidden shine-sweep">
               <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-[1px] bg-gradient-to-r from-transparent via-cyan-400/50 to-transparent"/>
               <div className="relative">
                 <div className="w-20 h-20 mx-auto rounded-2xl flex items-center justify-center relative">
