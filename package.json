@@ -20,6 +20,7 @@
     "stats:watch": "node scripts/terminal-dashboard.js"
   },
   "dependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
     "react": "^19.3.0",
     "react-dom": "^19.3.0"
   },
