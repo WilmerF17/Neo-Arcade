@@ -1120,6 +1120,21 @@ export default function App(){
                 )
               })}
             </div>
+            <div className="mt-4 glass rounded-xl p-3 border border-purple-400/20">
+              <h4 className="font-black text-white text-sm" style={{fontFamily:'Orbitron'}}>📅 MISIONES SEMANALES</h4>
+              <div className="mt-2 space-y-2">
+                {[
+                  {icon:'🔥', title:'Racha 7 días', prog: streak, target:7},
+                  {icon:'💎', title:'Coleccionista 25', prog: gamesPlayedDistinct, target:25},
+                  {icon:'🏆', title:'Maestro 5000', prog: totalScore, target:5000},
+                ].map(m=>(
+                  <div key={m.title} className="flex justify-between items-center text-xs font-mono">
+                    <span className="text-white/70">{m.icon} {m.title}</span>
+                    <span className="text-white/50">{Math.min(m.prog,m.target)}/{m.target} {m.prog>=m.target?'✓':''}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
             <div className="mt-4 flex justify-between items-center">
               <p className="text-xs font-mono text-white/50">{dailyList.filter(d=> dailyDone[d.id]).length}/3 completados</p>
               <button onClick={()=>setShowDaily(false)} className="px-4 py-2 rounded-full bg-white text-black font-black text-xs">CERRAR</button>
@@ -1171,17 +1186,24 @@ export default function App(){
               </div>
               <button onClick={()=>setShowShop(false)} className="w-8 h-8 rounded-full glass flex items-center justify-center text-white/70 hover:bg-white/10">✕</button>
             </div>
-            <div className="mt-4 grid sm:grid-cols-3 gap-3">
+            <div className="mt-4 grid grid-cols-2 lg:grid-cols-4 gap-3">
               {[
-                {icon:'⚡', title:'Boost XP x2', desc:'Doble XP 1h', price:500, action:()=>{ if(coins>=500){ setCoins(c=>c-500); setShopHistory(h=>[{id:Date.now(), item:'Boost XP x2', price:500, date:new Date().toLocaleTimeString()}, ...h].slice(0,8)); addToast('¡Boost activo!','XP x2 por 1h'); setShowShop(false)} else addToast('Sin monedas','Juega para ganar') }},
-                {icon:'🎨', title:'Skin Dorada', desc:'Borde dorado BRILLA', price:1000, action:()=>{ if(coins>=1000){ setCoins(c=>c-1000); setShopHistory(h=>[{id:Date.now(), item:'Skin Dorada', price:1000, date:new Date().toLocaleTimeString()}, ...h].slice(0,8)); addToast('¡Skin Dorada!','BRILLA ✨'); setShowShop(false)} else addToast('Sin monedas','1000 necesarias') }},
-                {icon:'🎁', title:'Cofre Misterio', desc:'+200 a +1000 random', price:200, action:()=>{ if(coins>=200){ setCoins(c=>c-200); const win=200+Math.floor(Math.random()*800); setCoins(c=>c+win); setShopHistory(h=>[{id:Date.now(), item:`Cofre +${win}`, price:200, date:new Date().toLocaleTimeString()}, ...h].slice(0,8)); addToast(`¡+${win} 💰!`,'Cofre abierto'); setShowShop(false)} else addToast('Sin monedas','200 necesarias') }},
+                {icon:'⚡', title:'Boost XP x2', desc:'Doble XP 1h', price:500, cat:'BOOST', action:()=>{ if(coins>=500){ setCoins(c=>c-500); setShopHistory(h=>[{id:Date.now(), item:'Boost XP x2', price:500, date:new Date().toLocaleTimeString()}, ...h].slice(0,8)); addToast('¡Boost x2 activo!','60 min'); setShowShop(false)} else addToast('Sin monedas','Juega para ganar') }},
+                {icon:'💰', title:'Boost Coins x2', desc:'Doble monedas 1h', price:750, cat:'BOOST', action:()=>{ if(coins>=750){ setCoins(c=>c-750); setShopHistory(h=>[{id:Date.now(), item:'Boost Coins x2', price:750, date:new Date().toLocaleTimeString()}, ...h].slice(0,8)); addToast('¡Coins x2!','60 min'); setShowShop(false)} else addToast('Sin monedas','750 necesarias') }},
+                {icon:'🎨', title:'Skin Dorada', desc:'Borde dorado BRILLA', price:1000, cat:'SKIN', badge:'TOP', action:()=>{ if(coins>=1000){ setCoins(c=>c-1000); setShopHistory(h=>[{id:Date.now(), item:'Skin Dorada', price:1000, date:new Date().toLocaleTimeString()}, ...h].slice(0,8)); addToast('¡Skin Dorada!','BRILLA ✨'); setShowShop(false)} else addToast('Sin monedas','1000 necesarias') }},
+                {icon:'🌈', title:'Skin Neón', desc:'RGB animado', price:800, cat:'SKIN', action:()=>{ if(coins>=800){ setCoins(c=>c-800); setShopHistory(h=>[{id:Date.now(), item:'Skin Neón', price:800, date:new Date().toLocaleTimeString()}, ...h].slice(0,8)); addToast('¡Skin Neón!','RGB'); setShowShop(false)} else addToast('Sin monedas','800 necesarias') }},
+                {icon:'🎁', title:'Cofre Misterio', desc:'+200 a +1000', price:200, cat:'COFRE', action:()=>{ if(coins>=200){ setCoins(c=>c-200); const win=200+Math.floor(Math.random()*800); setCoins(c=>c+win); setShopHistory(h=>[{id:Date.now(), item:`Cofre +${win}`, price:200, date:new Date().toLocaleTimeString()}, ...h].slice(0,8)); addToast(`¡+${win} 💰!`,'Cofre'); setShowShop(false)} else addToast('Sin monedas','200 necesarias') }},
+                {icon:'💎', title:'Cofre Élite', desc:'+800 a +2500', price:500, cat:'COFRE', badge:'HOT', action:()=>{ if(coins>=500){ setCoins(c=>c-500); const win=800+Math.floor(Math.random()*1700); setCoins(c=>c+win); setShopHistory(h=>[{id:Date.now(), item:`Cofre Élite +${win}`, price:500, date:new Date().toLocaleTimeString()}, ...h].slice(0,8)); addToast(`¡+${win} 💎!`,'Élite'); setShowShop(false)} else addToast('Sin monedas','500 necesarias') }},
+                {icon:'🔓', title:'Desbloqueo 061', desc:'Cabina ELITE 061', price:1500, cat:'UNLOCK', action:()=>{ if(coins>=1500){ setCoins(c=>c-1500); setShopHistory(h=>[{id:Date.now(), item:'Desbloqueo 061', price:1500, date:new Date().toLocaleTimeString()}, ...h].slice(0,8)); addToast('¡Desbloqueada!','061 ELITE'); setShowShop(false)} else addToast('Sin monedas','1500 necesarias') }},
+                {icon:'👑', title:'Pase ELITE', desc:'250 cabinas + XP x2', price:1999, cat:'PASE', badge:'BEST', action:()=>{ if(coins>=1999){ setCoins(c=>c-1999); setShopHistory(h=>[{id:Date.now(), item:'Pase ELITE', price:1999, date:new Date().toLocaleTimeString()}, ...h].slice(0,8)); addToast('¡Pase ELITE!','Todo desbloqueado'); setShowShop(false)} else addToast('Sin monedas','1999 necesarias') }},
               ].map(it=>(
-                <div key={it.title} className="glass rounded-xl p-4 border border-white/10 text-center hover:border-fuchsia-400/30 transition">
-                  <div className="text-2xl">{it.icon}</div>
-                  <p className="font-black text-white text-sm mt-1" style={{fontFamily:'Orbitron'}}>{it.title}</p>
-                  <p className="text-xs font-mono text-white/60 mt-1">{it.desc}</p>
-                  <p className="font-black text-amber-300 mt-2">{it.price} 💰</p>
+                <div key={it.title} className="glass rounded-xl p-3 border border-white/10 text-center hover:border-fuchsia-400/30 transition relative overflow-hidden group">
+                  {it.badge && <span className="absolute top-2 right-2 text-[9px] font-black px-1.5 py-0.5 rounded-full bg-gradient-to-r from-amber-400 to-orange-500 text-black">{it.badge}</span>}
+                  <span className="absolute top-2 left-2 text-[9px] font-mono px-1.5 py-0.5 rounded-full bg-white/10 text-white/60">{it.cat}</span>
+                  <div className="text-2xl mt-4 group-hover:scale-110 transition">{it.icon}</div>
+                  <p className="font-black text-white text-xs mt-2" style={{fontFamily:'Orbitron'}}>{it.title}</p>
+                  <p className="text-[11px] font-mono text-white/55 mt-1">{it.desc}</p>
+                  <p className="font-black text-amber-300 mt-1.5 text-sm">{it.price} 💰</p>
                   <button onClick={it.action} className="mt-2 w-full py-1.5 rounded-full bg-white text-black font-black text-xs hover:scale-105 transition">COMPRAR</button>
                 </div>
               ))}
