@@ -297,6 +297,10 @@ export default function App(){
   const [showShop, setShowShop] = useState(false)
   const [showStats, setShowStats] = useState(false)
   const [combo, setCombo] = useState(0)
+  const [coinPop, setCoinPop] = useState(false)
+  const [shopHistory, setShopHistory] = useState<{id:number, item:string, price:number, date:string}[]>(()=>{
+    try{ const v=localStorage.getItem('neo_shop_history'); if(v) return JSON.parse(v)}catch{} return []
+  })
   const [toasts, setToasts] = useState<{id:number,text:string,sub:string}[]>([])
   const [globalReady, setGlobalReady] = useState(false)
   const [started, setStarted] = useState(false)
@@ -395,6 +399,8 @@ export default function App(){
   useEffect(()=> localStorage.setItem('neo_ach_unlocked',JSON.stringify(achUnlocked)),[achUnlocked])
   useEffect(()=> localStorage.setItem('neo_daily',JSON.stringify({date:todayStr, progress:dailyProgress})),[dailyProgress,todayStr])
   useEffect(()=> localStorage.setItem('neo_daily_done',JSON.stringify({date:todayStr, done:dailyDone})),[dailyDone,todayStr])
+  useEffect(()=> localStorage.setItem('neo_shop_history', JSON.stringify(shopHistory)),[shopHistory])
+  useEffect(()=>{ setCoinPop(true); const t=setTimeout(()=>setCoinPop(false),600); return()=>clearTimeout(t) },[coins])
 
   // --- SYNC con terminal (arcade-stats.json via /api/stats) ---
   useEffect(()=>{
@@ -739,7 +745,7 @@ export default function App(){
                 <div className="h-1.5 bg-white/10 rounded-full overflow-hidden mt-1"><div className="h-full bg-gradient-to-r from-cyan-400 to-fuchsia-500 transition-all" style={{width:`${xpPct}%`}}/></div>
               </div>
             </div>
-            <div className="glass rounded-full px-3 py-1.5 flex items-center gap-2">
+            <div className={`glass rounded-full px-3 py-1.5 flex items-center gap-2 ${coinPop?'coin-pop':''}`}>
               <span className="text-amber-300">💰</span><span className="font-black text-white text-sm" style={{fontFamily:'Orbitron'}}>{coins.toLocaleString()}</span>
               <span className="w-px h-4 bg-white/10 mx-1"/>
               <span className="text-orange-400">🔥</span><span className="font-bold text-white text-sm">{streak}</span>
@@ -1136,20 +1142,30 @@ export default function App(){
             </div>
             <div className="mt-4 grid sm:grid-cols-3 gap-3">
               {[
-                {icon:'⚡', title:'Boost XP x2', desc:'Doble XP 1h', price:500, action:()=>{ if(coins>=500){ setCoins(c=>c-500); addToast('¡Boost activo!','XP x2 por 1h'); setShowShop(false)} else addToast('Sin monedas','Juega para ganar') }},
-                {icon:'🎨', title:'Skin Dorada', desc:'Borde dorado BRILLA', price:1000, action:()=>{ if(coins>=1000){ setCoins(c=>c-1000); addToast('¡Skin Dorada!','BRILLA ✨'); setShowShop(false)} else addToast('Sin monedas','1000 necesarias') }},
-                {icon:'🎁', title:'Cofre Misterio', desc:'+200 a +1000 random', price:200, action:()=>{ if(coins>=200){ setCoins(c=>c-200); const win=200+Math.floor(Math.random()*800); setCoins(c=>c+win); addToast(`¡+${win} 💰!`,'Cofre abierto'); setShowShop(false)} else addToast('Sin monedas','200 necesarias') }},
+                {icon:'⚡', title:'Boost XP x2', desc:'Doble XP 1h', price:500, action:()=>{ if(coins>=500){ setCoins(c=>c-500); setShopHistory(h=>[{id:Date.now(), item:'Boost XP x2', price:500, date:new Date().toLocaleTimeString()}, ...h].slice(0,8)); addToast('¡Boost activo!','XP x2 por 1h'); setShowShop(false)} else addToast('Sin monedas','Juega para ganar') }},
+                {icon:'🎨', title:'Skin Dorada', desc:'Borde dorado BRILLA', price:1000, action:()=>{ if(coins>=1000){ setCoins(c=>c-1000); setShopHistory(h=>[{id:Date.now(), item:'Skin Dorada', price:1000, date:new Date().toLocaleTimeString()}, ...h].slice(0,8)); addToast('¡Skin Dorada!','BRILLA ✨'); setShowShop(false)} else addToast('Sin monedas','1000 necesarias') }},
+                {icon:'🎁', title:'Cofre Misterio', desc:'+200 a +1000 random', price:200, action:()=>{ if(coins>=200){ setCoins(c=>c-200); const win=200+Math.floor(Math.random()*800); setCoins(c=>c+win); setShopHistory(h=>[{id:Date.now(), item:`Cofre +${win}`, price:200, date:new Date().toLocaleTimeString()}, ...h].slice(0,8)); addToast(`¡+${win} 💰!`,'Cofre abierto'); setShowShop(false)} else addToast('Sin monedas','200 necesarias') }},
               ].map(it=>(
-                <div key={it.title} className="glass rounded-xl p-4 border border-white/10 text-center">
+                <div key={it.title} className="glass rounded-xl p-4 border border-white/10 text-center hover:border-fuchsia-400/30 transition">
                   <div className="text-2xl">{it.icon}</div>
                   <p className="font-black text-white text-sm mt-1" style={{fontFamily:'Orbitron'}}>{it.title}</p>
                   <p className="text-xs font-mono text-white/60 mt-1">{it.desc}</p>
                   <p className="font-black text-amber-300 mt-2">{it.price} 💰</p>
-                  <button onClick={it.action} className="mt-2 w-full py-1.5 rounded-full bg-white text-black font-black text-xs">COMPRAR</button>
+                  <button onClick={it.action} className="mt-2 w-full py-1.5 rounded-full bg-white text-black font-black text-xs hover:scale-105 transition">COMPRAR</button>
                 </div>
               ))}
             </div>
-            <p className="text-[11px] font-mono text-white/30 text-center mt-4">Monetario virtual 18+ — sin dinero real • Se guarda en localStorage</p>
+            {shopHistory.length>0 && (
+              <div className="mt-4 glass rounded-xl p-3 border border-white/10">
+                <p className="text-[11px] font-mono tracking-widest text-white/50">HISTORIAL GASTOS</p>
+                <div className="mt-2 space-y-1 max-h-[100px] overflow-auto pr-1">
+                  {shopHistory.map(h=>(
+                    <div key={h.id} className="flex justify-between text-xs font-mono"><span className="text-white/70">{h.item}</span><span className="text-amber-300">-{h.price} 💰</span><span className="text-white/30">{h.date}</span></div>
+                  ))}
+                </div>
+              </div>
+            )}
+            <p className="text-[11px] font-mono text-white/30 text-center mt-4">Monetario virtual 18+ — sin dinero real • Historial guardado • Animación suave</p>
           </div>
         </div>
       )}

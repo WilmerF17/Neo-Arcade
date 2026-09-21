@@ -87,59 +87,69 @@ main, header { content-visibility: auto; contain-intrinsic-size: auto 500px; }
 .scrollbar-thin::-webkit-scrollbar { width: 6px; }
 .scrollbar-thin { scrollbar-width: thin; }
 
-/* RGB & Animaciones */
+/* RGB & Animaciones — suaves, fluidas, prolongadas, no forzadas */
 @keyframes rgb {
-  0% { filter: hue-rotate(0deg); }
-  100% { filter: hue-rotate(360deg); }
+  0% { filter: hue-rotate(0deg) brightness(1); }
+  50% { filter: hue-rotate(180deg) brightness(1.05); }
+  100% { filter: hue-rotate(360deg) brightness(1); }
 }
 @keyframes rgbBorder {
   0% { border-color: #ff0080; box-shadow: 0 0 14px #ff0080; }
-  33% { border-color: #00ffff; box-shadow: 0 0 14px #00ffff; }
+  33% { border-color: #00ffff; box-shadow: 0 0 16px #00ffff; }
   66% { border-color: #ffdd00; box-shadow: 0 0 14px #ffdd00; }
   100% { border-color: #ff0080; box-shadow: 0 0 14px #ff0080; }
 }
 @keyframes neonPulse {
-  0%,100% { box-shadow: 0 0 14px rgba(0,255,255,0.5), 0 0 30px rgba(255,0,255,0.22); }
-  50% { box-shadow: 0 0 22px rgba(255,0,255,0.6), 0 0 44px rgba(0,255,255,0.32); }
+  0%,100% { box-shadow: 0 0 14px rgba(0,255,255,0.45), 0 0 30px rgba(255,0,255,0.18); transform: scale(1); }
+  50% { box-shadow: 0 0 22px rgba(255,0,255,0.55), 0 0 44px rgba(0,255,255,0.28); transform: scale(1.01); }
 }
-@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
 @keyframes spin { to { transform: rotate(360deg)} }
 @keyframes shimmer {
   0% { background-position: -200% 0; }
   100% { background-position: 200% 0; }
 }
-.rgb-animate { animation: rgb 4s linear infinite; }
-.rgb-border { animation: rgbBorder 3s linear infinite; }
-.neon-pulse { animation: neonPulse 2s ease-in-out infinite; }
+@keyframes coinPop {
+  0% { transform: scale(1); }
+  30% { transform: scale(1.12); filter: brightness(1.2); }
+  100% { transform: scale(1); }
+}
+.rgb-animate { animation: rgb 8s cubic-bezier(0.4,0,0.2,1) infinite; }
+.rgb-border { animation: rgbBorder 6s cubic-bezier(0.4,0,0.2,1) infinite; }
+.neon-pulse { animation: neonPulse 4s cubic-bezier(0.4,0,0.2,1) infinite; }
 .shimmer {
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
   background-size: 200% 100%;
-  animation: shimmer 1.8s linear infinite;
+  animation: shimmer 3.2s cubic-bezier(0.4,0,0.2,1) infinite;
 }
 .rgb-text {
   background: linear-gradient(90deg, #ff0080, #00ffff, #ffdd00, #ff0080);
   background-size: 300% 100%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: shimmer 2.5s linear infinite;
+  animation: shimmer 3.5s cubic-bezier(0.4,0,0.2,1) infinite;
 }
-/* BRILLO ELITE */
+.coin-pop { animation: coinPop 0.6s cubic-bezier(0.34,1.56,0.64,1) !important; }
+button, a { transition: all 0.35s cubic-bezier(0.4,0,0.2,1); }
+.glass { transition: all 0.4s cubic-bezier(0.4,0,0.2,1); }
+/* BRILLO ELITE — suave y prolongado */
 @keyframes shineSweep {
-  0% { transform: translateX(-100%) skewX(-12deg); opacity: 0; }
-  20% { opacity: 0.7; }
-  100% { transform: translateX(200%) skewX(-12deg); opacity: 0; }
+  0% { transform: translateX(-105%) skewX(-12deg); opacity: 0; }
+  15% { opacity: 0.55; }
+  85% { opacity: 0.55; }
+  100% { transform: translateX(205%) skewX(-12deg); opacity: 0; }
 }
 @keyframes brilloPulse {
-  0%,100% { filter: brightness(1) drop-shadow(0 0 8px rgba(0,255,255,0.4)); }
-  50% { filter: brightness(1.25) drop-shadow(0 0 16px rgba(255,0,255,0.6)); }
+  0%,100% { filter: brightness(1) drop-shadow(0 0 8px rgba(0,255,255,0.35)); }
+  50% { filter: brightness(1.18) drop-shadow(0 0 14px rgba(255,0,255,0.45)); }
 }
 .shine-sweep { position: relative; overflow: hidden; }
 .shine-sweep::after {
   content: ""; position: absolute; inset: 0;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.22), transparent);
-  transform: translateX(-100%) skewX(-12deg);
-  animation: shineSweep 2.8s ease-in-out infinite;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+  transform: translateX(-105%) skewX(-12deg);
+  animation: shineSweep 4.5s cubic-bezier(0.4,0,0.2,1) infinite;
   pointer-events: none;
 }
-.brillo { animation: brilloPulse 2.2s ease-in-out infinite; }
+.brillo { animation: brilloPulse 3.8s cubic-bezier(0.4,0,0.2,1) infinite; }
 .glass:hover { border-color: rgba(255,255,255,0.14); box-shadow: 0 0 20px rgba(0,255,255,0.12), inset 0 0 12px rgba(255,255,255,0.04); }
