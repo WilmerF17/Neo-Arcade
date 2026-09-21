@@ -39,3 +39,10 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
+      - name: Ping Google sitemap
+        if: success()
+        run: |
+          echo "Ping Google sitemap..."
+          curl -s "https://www.google.com/ping?sitemap=https://wilmerf17.github.io/Neo-Arcade/sitemap.xml" || true
+          curl -s "https://www.bing.com/ping?sitemap=https://wilmerf17.github.io/Neo-Arcade/sitemap.xml" || true
+          echo "Ping done — Google/Bing notificados para re-indexar Neo Elite 250"
