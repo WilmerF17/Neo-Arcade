@@ -290,6 +290,7 @@ export default function App(){
   const [active, setActive] = useState<GameId>('snake')
   const [filter, setFilter] = useState<'ALL'|'ARCADE'|'BRAIN'|'PULSE'|'SKILL'|'CASINO'>('ALL')
   const [search, setSearch] = useState('')
+  const [displayCount, setDisplayCount] = useState(24)
   const [muted, setMuted] = useState(false)
   const [showDaily, setShowDaily] = useState(false)
   const [showAch, setShowAch] = useState(false)
@@ -302,6 +303,7 @@ export default function App(){
   const hasHydrated = useRef(false)
   const lastEvent = useRef<string>('')
   const lastServerUpdate = useRef<string>('')
+  useEffect(()=>{ setDisplayCount(24) },[filter, search])
 
   // player persistence
   const [level, setLevel] = useState(()=> Number(localStorage.getItem('neo_level')||1))
@@ -761,31 +763,33 @@ export default function App(){
         </div>
       )}
 
-      <main id="arcade" className="max-w-[1400px] mx-auto px-3 sm:px-4 py-6 grid lg:grid-cols-[340px_1fr] gap-6">
-        <div className="space-y-3">
-          <p className="text-[11px] tracking-[0.3em] font-mono text-white/50 px-1">CABINAS ({filteredGames.length}/250) <span className="rgb-text font-black">RGB ELITE</span></p>
-          <div className="grid grid-cols-1 gap-2.5 max-h-[68vh] overflow-auto pr-1 scrollbar-thin">
-            {filteredGames.map(id=>{
+      <main id="arcade" className="max-w-[1400px] mx-auto px-3 sm:px-4 py-6 space-y-6">
+        {/* Menú grid 250 — espacios optimizados */}
+        <div className="flex flex-col sm:flex-row gap-3 items-center justify-between">
+          <p className="text-[11px] tracking-[0.3em] font-mono text-white/50">CABINAS ({filteredGames.length}/250) <span className="rgb-text font-black">GRID 250 • ESPACIOS OPTIMIZADOS</span></p>
+          <span className="text-[11px] font-mono px-2.5 py-1 rounded-full glass text-white/50">Mostrando {Math.min(displayCount, filteredGames.length)} de {filteredGames.length}</span>
+        </div>
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
+          {filteredGames.slice(0, displayCount).map(id=>{
               const g=GAMES[id]
               const isActive=id===active
               const hi=highScores[id]||0
               const pl=plays[id]||0
               return (
-                <button key={id} onClick={()=>{ setActive(id); playClick() }}
-                  className={`text-left rounded-2xl p-[1.5px] transition-all ${isActive?'scale-[1.02]':''}`}
+                <button key={id} onClick={()=>{ setActive(id); playClick(); document.getElementById('game-view')?.scrollIntoView({behavior:'smooth', block:'center'}) }}
+                  className={`text-left rounded-2xl p-[1.5px] transition-all shine-sweep ${isActive?'scale-[1.02] brillo':''}`}
                   style={{background: isActive? `linear-gradient(135deg, ${g.color}, #ffffff)` : 'rgba(255,255,255,0.08)'}}>
-                  <div className={`rounded-[15px] p-3 flex gap-3 items-center ${isActive?'bg-[#0b0b1e]':'glass hover:bg-white/[0.08]'} transition`}>
-                    <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0" style={{background:`${g.color}14`, border:`1px solid ${g.color}38`, boxShadow: isActive? `0 0 16px ${g.color}60`: `0 0 10px ${g.color}18`}}><GameIcon id={id} color={g.color} size={26} /></div>
-                    <div className="flex-1 min-w-0">
-                      <p className="font-black text-white leading-none text-[13px] tracking-wide" style={{fontFamily:'Orbitron'}}>{g.title}</p>
-                      <p className="text-[11px] font-mono tracking-widest mt-0.5" style={{color:g.color}}>{g.subtitle}</p>
-                      <p className="text-[11px] text-white/45 font-mono truncate">{g.cat} • {g.diff===1?'FÁCIL':g.diff===2?'MEDIO':'DIFÍCIL'} • {g.lang}</p>
+                  <div className={`rounded-[15px] p-3 flex flex-col gap-2 items-center text-center ${isActive?'bg-[#0b0b1e] brillo':'glass hover:bg-white/[0.08]'} transition`}>
+                    <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0" style={{background:`${g.color}14`, border:`1px solid ${g.color}38`, boxShadow: isActive? `0 0 16px ${g.color}60`: `0 0 10px ${g.color}18`}}><GameIcon id={id} color={g.color} size={28} /></div>
+                    <div className="w-full">
+                      <p className="font-black text-white leading-none text-[11px] tracking-wide truncate" style={{fontFamily:'Orbitron'}}>{g.title}</p>
+                      <p className="text-[10px] font-mono tracking-widest mt-0.5 truncate" style={{color:g.color}}>{g.subtitle}</p>
+                      <p className="text-[10px] text-white/45 font-mono">{g.cat} • {g.diff===1?'FÁCIL':g.diff===2?'MEDIO':'DIFÍCIL'}</p>
                     </div>
-                    <div className="text-right shrink-0">
-                      <p className="text-[10px] font-mono text-white/45">HI</p>
-                      <p className="font-black text-white text-sm" style={{fontFamily:'Orbitron'}}>{hi}</p>
-                      <p className="text-[10px] font-mono text-white/30">{pl} plays</p>
-                      {isActive && <span className="inline-block mt-1 w-2 h-2 rounded-full animate-pulse" style={{background:g.color, boxShadow:`0 0 8px ${g.color}`}}/>}
+                    <div className="flex gap-2 items-center justify-center w-full">
+                      <span className="text-[10px] font-mono px-1.5 py-0.5 rounded-full glass text-white/50">HI {hi}</span>
+                      <span className="text-[10px] font-mono text-white/30">{pl}×</span>
+                      {isActive && <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{background:g.color, boxShadow:`0 0 6px ${g.color}`}}/>}
                     </div>
                   </div>
                 </button>
@@ -793,9 +797,12 @@ export default function App(){
             })}
           </div>
           {filteredGames.length===0 && <p className="text-sm font-mono text-white/45 text-center py-8">Sin resultados</p>}
-        </div>
-
-        <div className="space-y-4">
+          {filteredGames.length > displayCount && (
+            <div className="flex justify-center">
+              <button onClick={()=>setDisplayCount(c=>c+24)} className="px-6 py-2 rounded-full glass border border-white/10 text-xs font-mono tracking-widest text-white/70 hover:bg-white/10 shine-sweep">Cargar más +24 ({filteredGames.length - displayCount} restantes)</button>
+            </div>
+          )}
+        <div id="game-view" className="space-y-4">
           <div className={`rounded-[24px] p-[1.5px] ${rgbMode?'neon-pulse':''}`} style={{background:`linear-gradient(135deg, ${cur.color}80, transparent 60%, ${cur.color}40)`}}>
             <div className="rounded-[22px] bg-[#0a0a18]/90 backdrop-blur-xl border border-white/10 overflow-hidden">
               <div className="px-4 sm:px-6 py-4 flex flex-wrap items-center justify-between gap-3 border-b border-white/10" style={{background:`linear-gradient(90deg, ${cur.color}14, transparent)`}}>
