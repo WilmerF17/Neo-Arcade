@@ -336,6 +336,7 @@ export default function App(){
   const [dailyDone, setDailyDone] = useState<Record<string,boolean>>(()=>{
     try{ const raw=localStorage.getItem('neo_daily_done'); if(raw){ const o=JSON.parse(raw); if(o.date===todayStr) return o.done } }catch{} return {}
   })
+  const [hasSpun, setHasSpun] = useState(()=> localStorage.getItem('neo_wheel_date')===todayStr)
 
   const dailyList = useMemo(()=> getDailyForDate(todayStr),[todayStr])
 
@@ -612,6 +613,16 @@ export default function App(){
       handleScore(0)
     }
   },[handleScore])
+  const handleWheel = ()=>{
+    if(hasSpun) return
+    const rewards=[10,20,50,100,250,500]
+    const win=rewards[Math.floor(Math.random()*rewards.length)]
+    setCoins(c=>c+win)
+    setHasSpun(true)
+    localStorage.setItem('neo_wheel_date', todayStr)
+    addToast(`¡Ruleta: +${win} 💰!`, 'Bonus diario')
+    playClick()
+  }
 
   const filteredGames = useMemo(()=>{
     const term=search.toLowerCase()
@@ -994,6 +1005,13 @@ export default function App(){
                 <p className="text-xs font-mono tracking-widest text-amber-300">{todayStr} • Reinicio 00:00</p>
               </div>
               <button onClick={()=>setShowDaily(false)} className="w-8 h-8 rounded-full glass flex items-center justify-center text-white/70 hover:bg-white/10">✕</button>
+            </div>
+            <div className="mt-4 glass rounded-xl p-4 border border-amber-400/20 flex items-center justify-between shine-sweep">
+              <div>
+                <p className="font-black text-white text-sm" style={{fontFamily:'Orbitron'}}>🎡 RULETA DIARIA</p>
+                <p className="text-xs font-mono text-white/60">Gira 1 vez al día • 10 a 500 💰 {hasSpun && '✓ Hoy ya girada'}</p>
+              </div>
+              <button onClick={handleWheel} disabled={hasSpun} className={`px-5 py-2 rounded-full font-black text-xs tracking-widest ${hasSpun?'glass text-white/30 border border-white/10':'bg-gradient-to-r from-amber-400 to-orange-500 text-black hover:scale-105 transition'}`}>{hasSpun?'JUGADA':'GIRAR'}</button>
             </div>
             <div className="mt-4 space-y-3">
               {dailyList.map(ch=>{
