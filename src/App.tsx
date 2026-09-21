@@ -1004,7 +1004,7 @@ export default function App(){
                   {active==='lottery' && <LotteryGame onScore={handleScore} isStarted={started} onBet={handleBet} onWin={handleWin}/>}
                   {active==='crash' && <CrashGame onScore={handleScore} isStarted={started} onBet={handleBet} onWin={handleWin}/>}
                   {active==='mines' && <MinesGame onScore={handleScore} isStarted={started} onBet={handleBet} onWin={handleWin}/>}
-                  {active.startsWith('ph') && <ElitePhGame onScore={handleScore} isStarted={started} title={GAMES[active]?.title} color={GAMES[active]?.color}/>}
+                  {active.startsWith('ph') && <ElitePhGame onScore={handleScore} isStarted={started} title={GAMES[active]?.title} color={GAMES[active]?.color} mech={GAMES[active]?.mech}/>}
                 </div>
                 </GameErrorBoundary>
               </div>
