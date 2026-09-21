@@ -361,6 +361,16 @@ export default function App(){
     url.hash = active
     window.history.replaceState(null,'', url.toString())
   },[active, filter])
+  useEffect(()=>{
+    const g=GAMES[active]
+    document.title = `${g.title} — Neo Elite 250 | ${g.subtitle}`
+    const ogT=document.querySelector('meta[property="og:title"]')
+    if(ogT) ogT.setAttribute('content', `${g.title} — Neo Elite 250 | ${g.cat}`)
+    const ogD=document.querySelector('meta[property="og:description"]')
+    if(ogD) ogD.setAttribute('content', g.desc)
+    const twT=document.querySelector('meta[name="twitter:title"]')
+    if(twT) twT.setAttribute('content', g.title)
+  },[active])
 
   const dailyList = useMemo(()=> getDailyForDate(todayStr),[todayStr])
 
@@ -787,9 +797,12 @@ export default function App(){
 
         <div className="max-w-[1400px] mx-auto px-3 sm:px-4 pb-3 flex flex-col sm:flex-row gap-2 items-stretch sm:items-center justify-between border-t border-white/5 pt-3 mt-1">
           <div className="flex gap-1.5 flex-wrap">
-            {(['ALL','ARCADE','BRAIN','PULSE','SKILL','CASINO'] as const).map(cat=>(
-              <button key={cat} onClick={()=>{ setFilter(cat as any); document.getElementById('arcade')?.scrollIntoView({behavior:'smooth', block:'start'}) }} className={`px-3 py-1.5 rounded-full text-[11px] font-mono tracking-widest border transition ${filter===cat?'bg-cyan-400 text-black border-cyan-400 font-black':'glass text-white/60 border-white/10 hover:bg-white/10'}`}>{cat}</button>
-            ))}
+            {(['ALL','ARCADE','BRAIN','PULSE','SKILL','CASINO'] as const).map(cat=>{
+              const count = cat==='ALL' ? Object.keys(GAMES).length : Object.values(GAMES).filter(g=>g.cat===cat).length
+              return (
+                <button key={cat} onClick={()=>{ setFilter(cat as any); setTimeout(()=>{ const el=document.getElementById('arcade'); if(el){ const y=el.getBoundingClientRect().top + window.scrollY - 72; window.scrollTo({top:y, behavior:'smooth'}) } },50) }} className={`px-3 py-1.5 rounded-full text-[11px] font-mono tracking-widest border transition flex items-center gap-1 ${filter===cat?'bg-cyan-400 text-black border-cyan-400 font-black shadow-[0_0_12px_rgba(0,255,255,0.4)]':'glass text-white/60 border-white/10 hover:bg-white/10'}`}>{cat} <span className={`text-[10px] px-1 py-0.5 rounded-full ${filter===cat?'bg-black/15':'bg-white/10'}`}>{count}</span></button>
+              )
+            })}
           </div>
           <div className="flex gap-2 items-center">
             <div className="relative">
@@ -860,8 +873,8 @@ export default function App(){
               const hi=highScores[id]||0
               const pl=plays[id]||0
               return (
-                <button key={id} onClick={()=>{ setActive(id); playClick(); document.getElementById('game-view')?.scrollIntoView({behavior:'smooth', block:'center'}) }}
-                  className={`text-left rounded-2xl p-[1.5px] transition-all shine-sweep ${isActive?'scale-[1.02] brillo':''}`}
+                <button key={id} onClick={()=>{ setActive(id); playClick(); setTimeout(()=>{ const el=document.getElementById('game-view'); if(el){ const y=el.getBoundingClientRect().top + window.scrollY - 72; window.scrollTo({top:y, behavior:'smooth'}) } },80) }}
+                  className={`text-left rounded-2xl p-[1.5px] transition-all shine-sweep ${isActive?'scale-[1.02] brillo ring-2 ring-white/20':''}`}
                   style={{background: isActive? `linear-gradient(135deg, ${g.color}, #ffffff)` : 'rgba(255,255,255,0.08)'}}>
                   <div className={`rounded-[15px] p-3 flex flex-col gap-2 items-center text-center ${isActive?'bg-[#0b0b1e] brillo':'glass hover:bg-white/[0.08]'} transition`}>
                     <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0" style={{background:`${g.color}14`, border:`1px solid ${g.color}38`, boxShadow: isActive? `0 0 16px ${g.color}60`: `0 0 10px ${g.color}18`}}><GameIcon id={id} color={g.color} size={28} /></div>
@@ -886,7 +899,7 @@ export default function App(){
               <button onClick={()=>setDisplayCount(c=>c+24)} className="px-6 py-2 rounded-full glass border border-white/10 text-xs font-mono tracking-widest text-white/70 hover:bg-white/10 shine-sweep">Cargar más +24 ({filteredGames.length - displayCount} restantes)</button>
             </div>
           )}
-        <div id="game-view" className="space-y-4">
+        <div id="game-view" key={active} className="space-y-4 slide-in">
           <div className={`rounded-[24px] p-[1.5px] ${rgbMode?'neon-pulse':''}`} style={{background:`linear-gradient(135deg, ${cur.color}80, transparent 60%, ${cur.color}40)`}}>
             <div className="rounded-[22px] bg-[#0a0a18]/90 backdrop-blur-xl border border-white/10 overflow-hidden">
               <div className="px-4 sm:px-6 py-4 flex flex-wrap items-center justify-between gap-3 border-b border-white/10" style={{background:`linear-gradient(90deg, ${cur.color}14, transparent)`}}>
